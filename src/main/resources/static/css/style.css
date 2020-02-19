@@ -4,3 +4,6 @@
  .nav-link-custom {
      color: rgba(0,0,0,.5);
  }
+.card-header {
+    padding: .1rem 1.25rem;
+}
