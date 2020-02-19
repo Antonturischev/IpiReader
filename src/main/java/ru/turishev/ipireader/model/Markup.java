@@ -16,6 +16,6 @@ public class Markup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "text")
+    @Column(name = "html")
     private String text;
 }
