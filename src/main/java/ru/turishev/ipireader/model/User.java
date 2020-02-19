@@ -18,13 +18,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Getter
     @Column(name = "login")
     private String login;
 
     private String password="123456";
 
     @Column(name = "fullname")
-    private String fullname;
+    private String fullName;
 
     @OneToMany(mappedBy = "higherUser", fetch = FetchType.LAZY)
     private List<User> underUsers;

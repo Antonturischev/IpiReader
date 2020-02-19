@@ -1,0 +1,31 @@
+
+package ru.turishev.ipireader.controllers;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import ru.turishev.ipireader.dto.TasksDto;
+import ru.turishev.ipireader.model.Task;
+import ru.turishev.ipireader.repositories.TasksRepository;
+import ru.turishev.ipireader.services.TasksService;
+
+@Controller
+public class TaskController {
+	@Autowired
+	TasksRepository tasksRepository;
+	@Autowired 
+	TasksService tasksService;
+	
+	@GetMapping("/task/{id}")
+	public String getTaskById(@PathVariable Long id,Model model) {
+		TasksDto task = new TasksDto(id);
+		model.addAttribute("task",task);
+		return "task";
+	}
+}

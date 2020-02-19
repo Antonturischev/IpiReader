@@ -19,4 +19,7 @@ public class Project {
 
     @OneToMany(mappedBy = "project",fetch = FetchType.LAZY)
     private List<Task> tasks;
+    
+    @Column(name = "title")
+    private String title;
 }
