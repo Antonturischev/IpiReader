@@ -1,11 +1,13 @@
 <#import "parts/common.ftl" as c>
+<#import "parts/pager.ftl" as p>
 <@c.page>
     <#include "parts/security.ftl">
     <#include "parts/navbar.ftl">
+    <@p.pager url page/>
     <div class="container mt-5">
         <h2>Список заявок</h2>
-        <#if tasks??>
-            <#list tasks as task>
+        <#if page??>
+            <#list page.content as task>
             <div id="accordion">
                 <div class="card">
                     <div class="card-header" id="headingOne">
@@ -18,7 +20,7 @@
 
                     <div id="collapse${task.getId()}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                            <p>${task.getDescription().text}</p>
+                            <p>${task.getDescription()}</p> <a href="/task/${task.getId()}">подробнее...</a>
                         </div>
                     </div>
                 </div>

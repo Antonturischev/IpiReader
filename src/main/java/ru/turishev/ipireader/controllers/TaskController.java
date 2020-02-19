@@ -24,7 +24,7 @@ public class TaskController {
 	
 	@GetMapping("/task/{id}")
 	public String getTaskById(@PathVariable Long id,Model model) {
-		TasksDto task = new TasksDto(id);
+		TasksDto task = tasksService.getById(id);
 		model.addAttribute("task",task);
 		return "task";
 	}

@@ -1,29 +1,42 @@
 package ru.turishev.ipireader.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.internal.Function;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.model.Task;
+import ru.turishev.ipireader.model.User;
 import ru.turishev.ipireader.repositories.TasksRepository;
+import ru.turishev.ipireader.repositories.UsersRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
-@Component
+@Service
 public class TasksService {
 	@Autowired
 	private TasksRepository tasksRepository;
    	@Autowired
-   	UsersRepository usersRepository;
+	UsersRepository usersRepository;
 	
-	public Task getById(Long id) {	
-		return tasksRepository.findById(id).get();
+	public TasksDto getById(Long id) {
+		return TasksDto.from(tasksRepository.findById(id).get());
 	}
 
-    public Iterable<Task> getActiveTasksByUser(User user) {
+    public Page<TasksDto> getActiveTasksByUser(User user, Pageable pageable) {
         User usr = usersRepository.findById(user.getId()).get();
-
-        List<Task> tasks = usr.getResponsTasks().stream().filter(x->!x.getStatus().getId().equals(3)&&!x.getStatus().getId().equals(4)).collect(Collectors.toList());
-        return tasks;
+		Page<Task> tasks = tasksRepository.findTasksByResponsibleUser(pageable, usr);
+		Page<TasksDto> tasksDto = tasks.map(this::convertToTasksDto);
+        return tasksDto;
     }
+    public TasksDto convertToTasksDto(Task task) {
+		return TasksDto.from(task);
+	}
 
 }
