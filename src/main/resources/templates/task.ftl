@@ -62,7 +62,7 @@
     	</div>
     	<#if task.getCommenst()??>
 			<#list task.getCommenst() as comment>
-	    		<span>${comment}</span>
+	    		<span>${comment.getDateAdded()}</span><span>${comment.getAuthor()}</span><span>${comment.getText()}</span> <br/>
 	    	</#list>    	
     	</#if>
     <#else>
