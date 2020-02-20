@@ -1,5 +1,7 @@
 package ru.turishev.ipireader.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +23,7 @@ public class TasksService {
 	UsersRepository usersRepository;
 	
 	public TasksDto getById(Long id) {
-		return TasksDto.from(tasksRepository.findById(id).get());
+		return TasksDto.from(tasksRepository.findById(id));
 	}
 
     public Page<TasksDto> getActiveTasksByUser(User user, Pageable pageable) {

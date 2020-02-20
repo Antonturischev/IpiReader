@@ -3,6 +3,7 @@ package ru.turishev.ipireader.dto;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.Builder;
@@ -41,26 +42,54 @@ public class TasksDto {
 	private List<String> spectratorsGroup;
 	private List<Attachment> attachments;
 
-	public static TasksDto from(Task task) {
-		return TasksDto.builder()
-				.id(task.getId())
-				.subject(task.getSubject())
-				.description((task.getDescription()!=null)?task.getDescription().getText():null)
-				.status((task.getStatus()!=null)?task.getStatus().getName():null)
-				.project(task.getProject())
-				.author((task.getCreatedBy()!=null)?task.getCreatedBy().getFullName():null)
-				.parent(task.getParent())
-				.children(task.getChildren())
-				.topics(DivisionsTopicService.getParentTopics(task.getDivisionsTopic()))
-				.responsible((task.getResponsible()!=null)?task.getResponsible().getFullName():null)
-				.responsibleGroup((task.getResponsibleGroup()!=null)?task.getResponsibleGroup().getName():null)
-				.priority((task.getPriority()!=null)?task.getPriority().getCodename():null)
-				.dateAdded(Utils.convertTimestampToString(task.getDateAdded()))
-				.dateChanged((task.getDateChanged()!=null)?Utils.convertTimestampToString(task.getDateChanged()):null)
-				.dateClosed((task.getDateClosed()!=null)?Utils.convertTimestampToString(task.getDateClosed()):null)
-				.commenst(task.getComments().stream().map(x->CommentDto.from(x)).collect(Collectors.toList()))
-				.spectrators(task.getSpectrators().stream().map(x->x.getFullName()).collect(Collectors.toList()))
-				.spectratorsGroup(task.getSpectratorsGroup().stream().map(x->x.getName()).collect(Collectors.toList()))
-				.build();
+	public static TasksDto from(Optional<Task> taskOptional) {
+		if(taskOptional.isPresent()) {
+			Task task = taskOptional.get();
+			return TasksDto.builder()
+					.id(task.getId())
+					.subject(task.getSubject())
+					.description((task.getDescription()!=null)?task.getDescription().getText():null)
+					.status((task.getStatus()!=null)?task.getStatus().getName():null)
+					.project(task.getProject())
+					.author((task.getCreatedBy()!=null)?task.getCreatedBy().getFullName():null)
+					.parent(task.getParent())
+					.children(task.getChildren())
+					.topics(DivisionsTopicService.getParentTopics(task.getDivisionsTopic()))
+					.responsible((task.getResponsible()!=null)?task.getResponsible().getFullName():null)
+					.responsibleGroup((task.getResponsibleGroup()!=null)?task.getResponsibleGroup().getName():null)
+					.priority((task.getPriority()!=null)?task.getPriority().getCodename():null)
+					.dateAdded(Utils.convertTimestampToString(task.getDateAdded()))
+					.dateChanged((task.getDateChanged()!=null)?Utils.convertTimestampToString(task.getDateChanged()):null)
+					.dateClosed((task.getDateClosed()!=null)?Utils.convertTimestampToString(task.getDateClosed()):null)
+					.commenst(task.getComments().stream().map(x->CommentDto.from(x)).collect(Collectors.toList()))
+					.spectrators(task.getSpectrators().stream().map(x->x.getFullName()).collect(Collectors.toList()))
+					.spectratorsGroup(task.getSpectratorsGroup().stream().map(x->x.getName()).collect(Collectors.toList()))
+					.build();
+	
+		}
+	return null;		
 	}
+	public static TasksDto from(Task task) {
+			return TasksDto.builder()
+					.id(task.getId())
+					.subject(task.getSubject())
+					.description((task.getDescription()!=null)?task.getDescription().getText():null)
+					.status((task.getStatus()!=null)?task.getStatus().getName():null)
+					.project(task.getProject())
+					.author((task.getCreatedBy()!=null)?task.getCreatedBy().getFullName():null)
+					.parent(task.getParent())
+					.children(task.getChildren())
+					.topics(DivisionsTopicService.getParentTopics(task.getDivisionsTopic()))
+					.responsible((task.getResponsible()!=null)?task.getResponsible().getFullName():null)
+					.responsibleGroup((task.getResponsibleGroup()!=null)?task.getResponsibleGroup().getName():null)
+					.priority((task.getPriority()!=null)?task.getPriority().getCodename():null)
+					.dateAdded(Utils.convertTimestampToString(task.getDateAdded()))
+					.dateChanged((task.getDateChanged()!=null)?Utils.convertTimestampToString(task.getDateChanged()):null)
+					.dateClosed((task.getDateClosed()!=null)?Utils.convertTimestampToString(task.getDateClosed()):null)
+					.commenst(task.getComments().stream().map(x->CommentDto.from(x)).collect(Collectors.toList()))
+					.spectrators(task.getSpectrators().stream().map(x->x.getFullName()).collect(Collectors.toList()))
+					.spectratorsGroup(task.getSpectratorsGroup().stream().map(x->x.getName()).collect(Collectors.toList()))
+					.build();
+	
+		}
 }

@@ -40,15 +40,15 @@
     	</p>   
     	<p> Ответственный: 
 	    	<#if task.getResponsible()??>
-	 			${task.getResponsible()!''}
+	 			${task.getResponsible()}
 	    	</#if>
 	    	<#if task.getResponsibleGroup()??>
-	 			${task.getResponsibleGroup()!''}
+	 			${task.getResponsibleGroup()}
 	    	</#if>
     	</p>
     	<div>
 	    	<#if task.getSpectratorsGroup()??>
-	    	Группы наблюдателей:
+	    	<span>Группы наблюдателей:</span>
 	    		<#list task.getSpectratorsGroup() as group>
 	    			<span>${group}</span>
 	    		</#list>
@@ -66,7 +66,9 @@
 	    	</#list>    	
     	</#if>
     <#else>
-    	<h4>Задача не найдена</h4>    
+	    <div class="alert alert-danger" role="alert">
+	  		<span>Задача не найдена</span>
+		</div>	    
     </#if>    
     </div>
 </@c.page>
