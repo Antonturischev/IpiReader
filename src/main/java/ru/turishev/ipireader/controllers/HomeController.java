@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.turishev.ipireader.dto.TasksDto;
+import ru.turishev.ipireader.model.Task;
 import ru.turishev.ipireader.security.UserDetailsImpl;
 import ru.turishev.ipireader.services.TasksService;
 

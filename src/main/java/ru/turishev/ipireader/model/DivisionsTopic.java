@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"parent","children","responsibleUser","divisionsTopic"})
+@ToString(exclude = {"parent","children","responsibleUser","tasks"})
 @Table(name = "divisions_topic")
 public class DivisionsTopic {
     @Id

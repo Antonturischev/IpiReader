@@ -22,8 +22,8 @@
                 <a class="nav-link" href="/main">Расширенный поиск</a>
             </li>
         </ul>
-        <form class="form-inline my-3 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Найти по номеру" aria-label="Search">
+        <form class="form-inline my-3 my-lg-0" method="POST" action="/task">
+            <input name="id" class="form-control mr-sm-2" type="search" placeholder="Найти по номеру" aria-label="Search">
             <button class="btn btn-outline-success my-3 my-sm-0" type="submit">Найти</button>
         </form>
         <div class="nav-item">
