@@ -7,3 +7,7 @@
 .card-header {
     padding: .1rem 1.25rem;
 }
+
+.input-group-pager {
+    width: 60px;
+}

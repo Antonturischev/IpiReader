@@ -22,7 +22,6 @@
         <#if task.getProject()??>
         	<p>Проект: ${task.getProject().getTitle()}</p>
         </#if>
-        
         <#if task.getParent()??>
         	<p>Родительская задача: <a href="/task/${task.getParent().getId()}">${task.getParent().getSubject()}</a></p>
     	</#if>    
