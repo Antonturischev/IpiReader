@@ -18,8 +18,7 @@ import ru.turishev.ipireader.services.TasksService;
 
 @Controller
 public class TaskController {
-	@Autowired
-	TasksRepository tasksRepository;
+
 	@Autowired 
 	TasksService tasksService;
 	
