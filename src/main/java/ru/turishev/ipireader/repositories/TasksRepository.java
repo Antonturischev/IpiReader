@@ -16,4 +16,6 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
 
     @Query("from Task t where t.responsible =:user")
     Page<Task> findTasksByResponsibleUser(Pageable pageable, @Param("user") User user);
+//    @Query("from  Task t where t.:paramName =:paramValue")
+//    Page<Task> findTasksByVarParam(Pageable pageable,String paramName, String paramValue);
 }

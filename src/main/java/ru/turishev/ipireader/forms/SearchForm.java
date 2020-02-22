@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.turishev.ipireader.utils.SearchParameter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -19,13 +22,15 @@ public class SearchForm {
     private String description;
     private String comment;
 
-    public Map<String, String> toMap() {
-        Map<String, String> map = new HashMap<>();
-        if(number!=null) map.put("number",number);
-        if(author!=null) map.put("author",author);
-        if(theme!=null) map.put("theme",theme);
-        if(description!=null) map.put("description",description);
-        if(comment!=null) map.put("comment",comment);
-        return map;
+    public List<SearchParameter> toList() {
+        List<SearchParameter> list = new ArrayList<>();
+        list.add(new SearchParameter(1,"number","Номер",(number!=null)?number:"",(number!=null)?"disabled":""));
+        list.add(new SearchParameter(2,"author","Автор",(author!=null)?author:"",(author!=null)?"disabled":""));
+        list.add(new SearchParameter(3,"theme","Тема",(theme!=null)?theme:"",(theme!=null)?"disabled":""));
+        list.add(new SearchParameter(4,"description","Описание",(description!=null)?description:"",(description!=null)?"disabled":""));
+        list.add(new SearchParameter(5,"comment","Коммент",(comment!=null)?comment:"",(comment!=null)?"disabled":""));
+        return list;
     }
+
+
 }

@@ -5,7 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.turishev.ipireader.forms.SearchForm;
+import ru.turishev.ipireader.utils.SearchParameter;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -25,7 +27,7 @@ public class AdvancedSearchController {
 					.description(description)
 					.comment(comment)
 				.build();
-		Map<String, String> selectedParams = searchForm.toMap();
+		List<SearchParameter> selectedParams = searchForm.toList();
 		if(selectedParams.size()>0) {
 			model.addAttribute("selectedParams", selectedParams);
 		}
