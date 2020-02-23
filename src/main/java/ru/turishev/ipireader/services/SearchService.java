@@ -20,14 +20,11 @@ public class SearchService {
     private TasksRepository tasksRepository;
 
     public Page<TasksDto> getTasksBySearchParameters(List<SearchParameter> searchParameters, Pageable pageable) {
-        String param = searchParameters.get(1).getSelectedValue();
-        //List<Task> task = tasksRepository.findTasksByTest("petrov", "по", "Описание", "к заявке");
-//        Page<Task> tasks = tasksRepository.findTasksByVarParam(pageable,
-//                searchForm.getAuthor(),
-//                searchForm.getTheme(),
-//                searchForm.getDescription(),
-//                searchForm.getComment());
-        Page<Task> tasks = tasksRepository.findTasksByVarParam(param,pageable);
+        Page<Task> tasks = tasksRepository.findTasksByVarParam(searchParameters.get(0).getSelectedValue().toUpperCase(),
+                                                               searchParameters.get(1).getSelectedValue().toUpperCase(),
+                                                               searchParameters.get(2).getSelectedValue().toUpperCase(),
+                                                               searchParameters.get(3).getSelectedValue().toUpperCase(),
+                                                               pageable);
         Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
         return tasksDto;
     }

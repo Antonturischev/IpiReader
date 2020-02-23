@@ -19,10 +19,28 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
     @Query("from Task t where t.responsible =:user")
     Page<Task> findTasksByResponsibleUser(Pageable pageable, @Param("user") User user);
 
-    @Query(value = "select * from tasks_task t where t.subject like %?1%",
-          countQuery = "select count(distinct(t.id)) from tasks_task t where t.subject like %?1%",
+    @Query(value = "select * from tasks_task t " +
+                        "inner join user_user u on t.created_by_id=u.id " +
+                        "inner join markup_markup m on t.description_id = m.id " +
+                        "inner join tasks_comment tc on tc.task_id = t.id "+
+                        "inner join markup_markup mm on tc.content_id = mm.id "+
+            "where " +
+                        "UPPER(u.fullname) like %?1% " +
+                        "and UPPER(t.subject) like %?2% " +
+                        "and UPPER(m.text) like %?3% " +
+                        "and UPPER(mm.text) like %?4% ",
+          countQuery = "select count(distinct(t.id)) from tasks_task t " +
+                        "inner join user_user u on t.created_by_id=u.id " +
+                        "inner join markup_markup m on t.description_id = m.id " +
+                        "inner join tasks_comment tc on tc.task_id = t.id "+
+                        "inner join markup_markup mm on tc.content_id = mm.id "+
+                   "where " +
+                        "UPPER(u.fullname) like %?1% " +
+                        "and UPPER(t.subject) like %?2% " +
+                        "and UPPER(m.text) like %?3% " +
+                        "and UPPER(mm.text) like %?4% ",
           nativeQuery = true)
-    Page<Task> findTasksByVarParam(String subject, Pageable pageable);
+    Page<Task> findTasksByVarParam(String author, String subject, String description, String comment, Pageable pageable);
 }
 /*Раюотает плохо
 
