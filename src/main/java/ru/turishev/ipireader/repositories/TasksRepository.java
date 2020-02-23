@@ -19,7 +19,7 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
     @Query("from Task t where t.responsible =:user")
     Page<Task> findTasksByResponsibleUser(Pageable pageable, @Param("user") User user);
 
-    @Query(value = "select * from tasks_task t " +
+    @Query(value = "select * from tasks_task tt where tt.id in ( select distinct t.id from tasks_task t " +
                         "inner join user_user u on t.created_by_id=u.id " +
                         "inner join markup_markup m on t.description_id = m.id " +
                         "inner join tasks_comment tc on tc.task_id = t.id "+
@@ -28,7 +28,7 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
                         "UPPER(u.fullname) like %?1% " +
                         "and UPPER(t.subject) like %?2% " +
                         "and UPPER(m.text) like %?3% " +
-                        "and UPPER(mm.text) like %?4% ",
+                        "and UPPER(mm.text) like %?4%)",
           countQuery = "select count(distinct(t.id)) from tasks_task t " +
                         "inner join user_user u on t.created_by_id=u.id " +
                         "inner join markup_markup m on t.description_id = m.id " +
