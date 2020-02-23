@@ -4,9 +4,6 @@ function addField() {
 	var selectedValue = selectBox.options[selectBox.selectedIndex].value;
 	var ph="";
 	switch(selectedValue) {
-		case 'number':	ph='Номер';
-						selectBox.options[selectBox.selectedIndex].disabled=true;
-						break;
 		case 'author':	ph='Автор';
 						selectBox.options[selectBox.selectedIndex].disabled=true;
 						break;
@@ -35,39 +32,3 @@ function deleteField(a) {
 	contDiv.parentNode.removeChild(contDiv);
 	return false;
 }
-
-
-// function refreshField(key,param) {
-// 	var div = document.createElement("div");
-// 	var selectBox = document.getElementById("selectBox");
-// 	var selectedCount=0;
-// 	var ph="";
-// 	switch(key.value) {
-// 		case 'number':	ph='Номер';
-// 			document.getElementById('number').disabled=true;
-// 			selectedCount=1;
-// 			break;
-// 		case 'author':	ph='Автор';
-// 			document.getElementById('number').disabled=true;
-// 			selectedCount=2;
-// 			break;
-// 		case 'theme':	ph='Тема';
-// 			document.getElementById('number').disabled=true;
-// 			selectedCount=3;
-// 			break;
-// 		case 'description':	ph='Описание';
-// 			selectBox.options[selectBox.selectedIndex].disabled=true;
-// 			selectedCount=4;
-// 			break;
-// 		case 'comment':	ph='Комментарий';
-// 			document.getElementById('number').disabled=true;
-// 			selectedCount=5;
-// 			break;
-// 		default: return false;
-// 			break;
-// 	}
-// 	//div.attributes.
-// 	div.innerHTML = '<input class="input" name=\"'+key.value+'\" placeholder=\"'+ph+' содержит\" value="'+param+'"/> <a style="color:red;" selectCount="'+selectedCount+'" href="#" class="addInput" onclick="deleteField(this)">x</a>'
-// 	document.getElementById("parentId").appendChild(div);
-// 	return false;
-// }

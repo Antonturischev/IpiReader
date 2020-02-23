@@ -1,7 +1,5 @@
 package ru.turishev.ipireader.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,8 +9,7 @@ import ru.turishev.ipireader.model.Task;
 import ru.turishev.ipireader.model.User;
 import ru.turishev.ipireader.repositories.TasksRepository;
 import ru.turishev.ipireader.repositories.UsersRepository;
-
-
+import ru.turishev.ipireader.utils.Utils;
 
 
 @Service
@@ -29,11 +26,11 @@ public class TasksService {
     public Page<TasksDto> getActiveTasksByUser(User user, Pageable pageable) {
         User usr = usersRepository.findById(user.getId()).get();
 		Page<Task> tasks = tasksRepository.findTasksByResponsibleUser(pageable, usr);
-		Page<TasksDto> tasksDto = tasks.map(this::convertToTasksDto);
+		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
         return tasksDto;
     }
-    public TasksDto convertToTasksDto(Task task) {
-		return TasksDto.from(task);
-	}
+//    public TasksDto convertToTasksDto(Task task) {
+//		return TasksDto.from(task);
+//	}
 
 }

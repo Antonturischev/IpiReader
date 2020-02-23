@@ -9,13 +9,16 @@ import ru.turishev.ipireader.model.Task;
 import ru.turishev.ipireader.model.User;
 
 
+import java.util.List;
 import java.util.Optional;
 
 public interface TasksRepository extends JpaRepository<Task,Long> {
+
     Optional<Task> findById(Long id);
 
     @Query("from Task t where t.responsible =:user")
     Page<Task> findTasksByResponsibleUser(Pageable pageable, @Param("user") User user);
-//    @Query("from  Task t where t.:paramName =:paramValue")
-//    Page<Task> findTasksByVarParam(Pageable pageable,String paramName, String paramValue);
+
+    @Query(value = "select * from tasks_task t where t.subject like %?1% ORDER BY ?#{#pageable}", countQuery = "select count(*) from tasks_task t where t.subject like %?1%", nativeQuery = true)
+    Page<Task> findTasksByVarParam(String subject, Pageable pageable);
 }

@@ -16,7 +16,6 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 public class SearchForm {
-    private String number;
     private String author;
     private String theme;
     private String description;
@@ -24,11 +23,10 @@ public class SearchForm {
 
     public List<SearchParameter> toList() {
         List<SearchParameter> list = new ArrayList<>();
-        list.add(new SearchParameter(1,"number","Номер",(number!=null)?number:"",(number!=null)?"disabled":""));
-        list.add(new SearchParameter(2,"author","Автор",(author!=null)?author:"",(author!=null)?"disabled":""));
-        list.add(new SearchParameter(3,"theme","Тема",(theme!=null)?theme:"",(theme!=null)?"disabled":""));
-        list.add(new SearchParameter(4,"description","Описание",(description!=null)?description:"",(description!=null)?"disabled":""));
-        list.add(new SearchParameter(5,"comment","Коммент",(comment!=null)?comment:"",(comment!=null)?"disabled":""));
+        list.add(new SearchParameter(1,"author","Автор",(author!=null)?author:"",(author!=null)?"disabled":""));
+        list.add(new SearchParameter(2,"theme","Тема",(theme!=null)?theme:"",(theme!=null)?"disabled":""));
+        list.add(new SearchParameter(3,"description","Описание",(description!=null)?description:"",(description!=null)?"disabled":""));
+        list.add(new SearchParameter(4,"comment","Коммент",(comment!=null)?comment:"",(comment!=null)?"disabled":""));
         return list;
     }
 

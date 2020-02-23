@@ -1,36 +1,49 @@
 package ru.turishev.ipireader.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.forms.SearchForm;
+import ru.turishev.ipireader.services.SearchService;
 import ru.turishev.ipireader.utils.SearchParameter;
-
 import java.util.List;
 import java.util.Map;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import ru.turishev.ipireader.utils.Utils;
 
 @Controller
 public class AdvancedSearchController {
+    @Autowired
+    private SearchService searchService;
+
 	@GetMapping("/search")
-	public String getSearchResult(@RequestParam(name = "number",required = false) String number,
-								  @RequestParam(name = "author",required = false) String author,
+	public String getSearchResult(@RequestParam(name = "author",required = false) String author,
 								  @RequestParam(name = "theme",required = false) String theme,
 								  @RequestParam(name = "description",required = false) String description,
 								  @RequestParam(name = "comment",required = false) String comment,
+								  @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
 								  Model model) {
 		SearchForm searchForm = SearchForm
 				.builder()
-					.number(number)
 					.author(author)
 					.theme(theme)
 					.description(description)
 					.comment(comment)
 				.build();
+		Page<TasksDto> tasks = searchService.getTasksBySearchForm(searchForm,pageable);
 		List<SearchParameter> selectedParams = searchForm.toList();
-		if(selectedParams.size()>0) {
-			model.addAttribute("selectedParams", selectedParams);
+		String url = "/search"+Utils.getUrlbySearchForm(searchForm);
+		model.addAttribute("selectedParams", selectedParams);
+		if(tasks.getContent().size()!=0){
+			model.addAttribute("page", tasks);
 		}
+		model.addAttribute("url",url);
 		return "search";	
 	}
 }

@@ -1,5 +1,5 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/pager.ftl" as p>
+<#import "parts/searchpager.ftl" as p>
 <#import "parts/tasklist.ftl" as t>
 <@c.page>
     <#include "parts/security.ftl">
@@ -26,5 +26,10 @@
             </div>
             <button type="submit" class="btn btn-primary">Найти</button>
         </form>
+    </div>
+    <div>
+        <#if page?exists>
+            <@p.pager url page/>
+        </#if>
     </div>
 </@c.page>

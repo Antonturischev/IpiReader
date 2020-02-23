@@ -8,14 +8,26 @@ import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.forms.SearchForm;
 import ru.turishev.ipireader.model.Task;
 import ru.turishev.ipireader.repositories.TasksRepository;
+import ru.turishev.ipireader.utils.Utils;
+
+import java.util.List;
+
 
 @Service
 public class SearchService {
     @Autowired
-    TasksRepository tasksRepository;
+    private TasksRepository tasksRepository;
+
     public Page<TasksDto> getTasksBySearchForm(SearchForm searchForm,  Pageable pageable) {
-        String param = "author";
-      //  Page<Task> tasks = tasksRepository.findTasksByVarParam(pageable, paramName, paramValue );
-        return null;
+        String param = "по сопровождению";
+        //List<Task> task = tasksRepository.findTasksByTest("petrov", "по", "Описание", "к заявке");
+//        Page<Task> tasks = tasksRepository.findTasksByVarParam(pageable,
+//                searchForm.getAuthor(),
+//                searchForm.getTheme(),
+//                searchForm.getDescription(),
+//                searchForm.getComment());
+        Page<Task> tasks = tasksRepository.findTasksByVarParam(param,pageable);
+        Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
+        return tasksDto;
     }
 }
