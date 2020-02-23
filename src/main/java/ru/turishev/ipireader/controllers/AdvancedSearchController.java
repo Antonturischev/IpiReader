@@ -36,7 +36,7 @@ public class AdvancedSearchController {
 					.description(description)
 					.comment(comment)
 				.build();
-		Page<TasksDto> tasks = searchService.getTasksBySearchForm(searchForm,pageable);
+		Page<TasksDto> tasks = searchService.getTasksBySearchParameters(searchForm.toList(),pageable);
 		List<SearchParameter> selectedParams = searchForm.toList();
 		String url = "/search"+Utils.getUrlbySearchForm(searchForm);
 		model.addAttribute("selectedParams", selectedParams);

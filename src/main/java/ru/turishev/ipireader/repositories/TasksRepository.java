@@ -19,6 +19,14 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
     @Query("from Task t where t.responsible =:user")
     Page<Task> findTasksByResponsibleUser(Pageable pageable, @Param("user") User user);
 
-    @Query(value = "select * from tasks_task t where t.subject like %?1% ORDER BY ?#{#pageable}", countQuery = "select count(*) from tasks_task t where t.subject like %?1%", nativeQuery = true)
+    @Query(value = "select * from tasks_task t where t.subject like %?1%",
+          countQuery = "select count(distinct(t.id)) from tasks_task t where t.subject like %?1%",
+          nativeQuery = true)
     Page<Task> findTasksByVarParam(String subject, Pageable pageable);
 }
+/*Раюотает плохо
+
+    @Query(value = "select * from tasks_task t where t.subject like %?1% ORDER BY ?#{#pageable}",
+          countQuery = "select count(distinct(t.id)) from tasks_task t where t.subject like %?1%",
+          nativeQuery = true)
+* */

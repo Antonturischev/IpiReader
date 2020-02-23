@@ -31,5 +31,9 @@
         <#if page?exists>
             <@p.pager url page/>
         </#if>
+        <div class="container mt-5">
+            <h2>Список заявок</h2>
+            <@t.tasklist page/>
+        </div>
     </div>
 </@c.page>
