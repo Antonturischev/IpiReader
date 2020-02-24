@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.model.Task;
+import ru.turishev.ipireader.repositories.DivisionsTopicRepository;
 import ru.turishev.ipireader.security.UserDetailsImpl;
+import ru.turishev.ipireader.services.DivisionsTopicService;
 import ru.turishev.ipireader.services.TasksService;
 
 
@@ -23,11 +25,15 @@ public class HomeController {
     @Autowired
     private TasksService tasksService;
 
+    @Autowired
+    private DivisionsTopicService divisionsTopicService;
+
     @GetMapping
     public String getHomePage(@AuthenticationPrincipal UserDetailsImpl user, Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<TasksDto> tasks = tasksService.getActiveTasksByUser(user.getUser(),pageable);
         model.addAttribute("page",tasks);
         model.addAttribute("url","/");
+        model.addAttribute("topics", divisionsTopicService.getRootDivisionTopic());
         return "homepage";
     }
 }

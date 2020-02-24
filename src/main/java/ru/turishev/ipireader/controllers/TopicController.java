@@ -24,4 +24,9 @@ public class TopicController {
         model.addAttribute("url","/topic/"+topic.getId().toString());
         return "topic";
     }
+
+    @GetMapping("/topic")
+    public String getTopics(Model model) {
+        return "topic";
+    }
 }

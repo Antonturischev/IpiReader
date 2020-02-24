@@ -1,5 +1,23 @@
-﻿        <!--        <#if selectedParams?exists>
-                    <#list selectedParams as key, param>
-                       <div><input class="input" name="${key}" value="${param}" /> <a style="color:red;"  href="#" class="addInput" onclick="deleteField(this)">x</a></div>
-                    </#list>
-                 </#if>-->
+﻿
+<#list comment as msg>
+    <#if !msg.reply??>
+        <li>
+            ${msg.message}
+                <@treeView msg replyes/>
+        </li>
+    </#if>
+</#list>
+
+<#macro treeView msg listReply>
+<#list listReply as reply>
+    <#if reply.reply.toString() == msg.toString()>
+    <ul>
+        <li>
+            ${reply.message}
+                <@treeView reply replyes/>
+        </li>
+    </ul>
+    </#if>
+</#list>
+</#macro>
+

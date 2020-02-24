@@ -13,8 +13,6 @@ import ru.turishev.ipireader.repositories.UsersRepository;
 import ru.turishev.ipireader.utils.Utils;
 
 import java.util.List;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -36,7 +34,7 @@ public class TasksService {
     }
 
     public Page<TasksDto> getTasksByTopic(DivisionsTopic topic, Pageable pageable) {
-		List<DivisionsTopic> topicList = DivisionsTopicService.getChildTopics(topic);//.getChildTopicsAsList(topic);
+		List<DivisionsTopic> topicList = DivisionsTopicService.getChildTopics(topic);
 		Page<Task> tasks = tasksRepository.findByTopic(topicList,pageable);
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
 		return tasksDto;
