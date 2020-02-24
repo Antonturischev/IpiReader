@@ -1,6 +1,8 @@
 package ru.turishev.ipireader.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -11,11 +13,9 @@ import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.forms.SearchForm;
 import ru.turishev.ipireader.services.SearchService;
 import ru.turishev.ipireader.utils.SearchParameter;
-import java.util.List;
-import java.util.Map;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import ru.turishev.ipireader.utils.Utils;
+
+import java.util.List;
 
 @Controller
 public class AdvancedSearchController {

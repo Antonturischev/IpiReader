@@ -8,7 +8,7 @@
         <@p.pager url page/>
     </#if>
     <div class="container mt-5">
-        <h2>Заявки</h2>
+        <h2>Заявки из раздела ${topic!''}</h2>
         <@t.tasklist page/>
     </div>
 </@c.page>

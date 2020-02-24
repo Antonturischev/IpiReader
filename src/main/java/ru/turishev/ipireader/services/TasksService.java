@@ -5,11 +5,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.turishev.ipireader.dto.TasksDto;
+import ru.turishev.ipireader.model.DivisionsTopic;
 import ru.turishev.ipireader.model.Task;
 import ru.turishev.ipireader.model.User;
 import ru.turishev.ipireader.repositories.TasksRepository;
 import ru.turishev.ipireader.repositories.UsersRepository;
 import ru.turishev.ipireader.utils.Utils;
+
+import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -29,8 +34,11 @@ public class TasksService {
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
         return tasksDto;
     }
-//    public TasksDto convertToTasksDto(Task task) {
-//		return TasksDto.from(task);
-//	}
 
+    public Page<TasksDto> getTasksByTopic(DivisionsTopic topic, Pageable pageable) {
+		List<DivisionsTopic> topicList = DivisionsTopicService.getChildTopics(topic);//.getChildTopicsAsList(topic);
+		Page<Task> tasks = tasksRepository.findByTopic(topicList,pageable);
+		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
+		return tasksDto;
+	}
 }

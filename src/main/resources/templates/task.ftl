@@ -34,7 +34,7 @@
     	</#if> 
     	<p>Раздел: 
     		<#list task.getTopics() as topic>
-    			/<a href="#">${topic.getTitle()}</a>
+    			/<a href="/topic/${topic.getId()}">${topic.getTitle()}</a>
     		</#list>
     	</p>   
     	<p> Ответственный: 
