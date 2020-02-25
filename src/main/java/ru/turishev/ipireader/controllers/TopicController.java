@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.model.DivisionsTopic;
+import ru.turishev.ipireader.services.DivisionsTopicService;
 import ru.turishev.ipireader.services.TasksService;
 
 @Controller
 public class TopicController {
     @Autowired
     TasksService tasksService;
+    @Autowired 
+    DivisionsTopicService divisionsTopicService;
 
     @GetMapping("/topic/{topic}")
     public String getTasksByTopic(@PathVariable DivisionsTopic topic, Pageable pageable, Model model) {
@@ -25,8 +28,9 @@ public class TopicController {
         return "topic";
     }
 
-    @GetMapping("/topic")
+    @GetMapping("/topics")
     public String getTopics(Model model) {
-        return "topic";
+    	model.addAttribute("topics", divisionsTopicService.getRootDivisionTopic());
+        return "topics";
     }
 }

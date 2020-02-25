@@ -40,7 +40,7 @@ public class AdvancedSearchController {
 		List<SearchParameter> selectedParams = searchForm.toList();
 		String url = "/search"+Utils.getUrlbySearchForm(searchForm);
 		model.addAttribute("selectedParams", selectedParams);
-		if(tasks.getContent().size()!=0){
+		if(tasks.getTotalPages()!=0){
 			model.addAttribute("page", tasks);
 		}
 		model.addAttribute("url",url);

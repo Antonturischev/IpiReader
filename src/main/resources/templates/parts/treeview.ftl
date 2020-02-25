@@ -1,13 +1,13 @@
 <#macro treeView listItems>
     <#list listItems as item>
-        <#if item.children.empty!true>
-            <li><span class="caret">${item.getId()}</span>
+        <#if item.children?has_content>
+            <li><span class="caret"><a href="/topic/${item.getId()}">${item.getTitle()}</a></span>
                 <ul class="nested">
-                    <@treeView item/>
+                    <@treeView item.children/>
                 </ul>
             </li>
         <#else>
-            <li>${item.getId()}</li>
+            <li><a href="/topic/${item.getId()}">${item.getTitle()}</a></li>
         </#if>
     </#list>
 </#macro>
