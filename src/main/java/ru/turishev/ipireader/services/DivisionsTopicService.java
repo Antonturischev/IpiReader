@@ -15,6 +15,7 @@ import ru.turishev.ipireader.repositories.DivisionsTopicRepository;
 public class DivisionsTopicService {
 	@Autowired
 	DivisionsTopicRepository divisionsTopicRepository;
+
     public static LinkedList<DivisionsTopic> getParentTopics(DivisionsTopic topic) {
     	LinkedList<DivisionsTopic> result= new LinkedList<DivisionsTopic>();
     	result.add(topic);
@@ -32,14 +33,6 @@ public class DivisionsTopicService {
 			}
 		}
     	return result;
-	}
-
-	public static String getChildTopicsAsString(DivisionsTopic topic) {
-		StringJoiner sj = new StringJoiner("','","'","'");
-		List<DivisionsTopic> topics = DivisionsTopicService.getChildTopics(topic);
-		List<String> topicList = topics.stream().map(x->x.getId().toString()).collect(Collectors.toList());
-		topicList.forEach(x->sj.add(x));
-		return sj.toString();
 	}
 
 	public static List<String> getChildTopicsAsList(DivisionsTopic topic) {

@@ -31,16 +31,25 @@ public class HomeController {
     	return "homepage";
     }
     
-    @GetMapping("/completebyme")
+    @GetMapping("/completedbyme")
     public String getCompleteByMyTasks(@AuthenticationPrincipal UserDetailsImpl user, Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
     	Page<TasksDto> tasks = tasksService.getCompleteByMeTasks(user.getUser(), pageable);
         if(tasks.getTotalPages()!=0) {
         	model.addAttribute("page",tasks);
         }
-        model.addAttribute("url","/completebyme");
+        model.addAttribute("url","/completedbyme");
     	return "homepage";
     }
-    
+
+    @GetMapping("/4meandsubordinates")
+    public String getTasks4MeAndSubordinates(@AuthenticationPrincipal UserDetailsImpl user, Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable){
+        Page<TasksDto> tasks = tasksService.getTasks4MeAndSubordinates(user.getUser(), pageable);
+        if(tasks.getTotalPages()!=0) {
+            model.addAttribute("page",tasks);
+        }
+        model.addAttribute("url","/4meandsubordinates");
+        return "homepage";
+    }
     
     @GetMapping("/")
     public String getHomePage(@AuthenticationPrincipal UserDetailsImpl user, Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
