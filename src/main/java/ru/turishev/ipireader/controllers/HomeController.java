@@ -12,28 +12,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.security.UserDetailsImpl;
-import ru.turishev.ipireader.services.DivisionsTopicService;
 import ru.turishev.ipireader.services.TasksService;
 
 
 @Controller
-@RequestMapping("/")
 public class HomeController {
 
     @Autowired
     private TasksService tasksService;
-
-    @Autowired
-    private DivisionsTopicService divisionsTopicService;
-
-    @GetMapping
+    
+    @GetMapping("/createdbymy")
+    public String getCreatedByMyTasks(@AuthenticationPrincipal UserDetailsImpl user, Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    	Page<TasksDto> tasks = tasksService.getCreatedByMeTasks(user.getUser(), pageable);
+        if(tasks.getTotalPages()!=0) {
+        	model.addAttribute("page",tasks);
+        }
+        model.addAttribute("url","/createdbymy");
+    	return "homepage";
+    }
+    
+    @GetMapping("/")
     public String getHomePage(@AuthenticationPrincipal UserDetailsImpl user, Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<TasksDto> tasks = tasksService.getActiveTasksByUser(user.getUser(),pageable);
         if(tasks.getTotalPages()!=0) {
         	model.addAttribute("page",tasks);
         }
         model.addAttribute("url","/");
-        model.addAttribute("topics", divisionsTopicService.getRootDivisionTopic());
         return "homepage";
     }
+
 }

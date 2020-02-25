@@ -1,20 +1,15 @@
 package ru.turishev.ipireader.dto;
 
-import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import lombok.Builder;
 import lombok.Data;
 import ru.turishev.ipireader.model.Attachment;
-import ru.turishev.ipireader.model.Comment;
 import ru.turishev.ipireader.model.DivisionsTopic;
-import ru.turishev.ipireader.model.Group;
 import ru.turishev.ipireader.model.Project;
 import ru.turishev.ipireader.model.Task;
-import ru.turishev.ipireader.model.User;
 import ru.turishev.ipireader.services.DivisionsTopicService;
 import ru.turishev.ipireader.utils.Utils;
 

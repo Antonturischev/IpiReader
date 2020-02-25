@@ -39,4 +39,11 @@ public class TasksService {
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
 		return tasksDto;
 	}
+
+	public Page<TasksDto> getCreatedByMeTasks(User user, Pageable pageable) {
+		User usr = usersRepository.findById(user.getId()).get();
+		Page<Task> tasks = tasksRepository.findAllByCreatedBy(usr, pageable);
+		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
+		return tasksDto;
+	}
 }

@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Builder
-@ToString(exclude = {"author","task"})
+@ToString(exclude = {"author"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tasks_comment")

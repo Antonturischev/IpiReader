@@ -1,10 +1,7 @@
 package ru.turishev.ipireader.model;
 
 import lombok.*;
-import lombok.experimental.FieldNameConstants;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +20,7 @@ public class Group {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_group_users", joinColumns = {@JoinColumn(name = "group_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    List<User> users= new ArrayList<User>();
+    List<User> users;
 
     @OneToMany(mappedBy = "responsibleGroup",fetch = FetchType.LAZY)
     private List<Task> responsTasks;

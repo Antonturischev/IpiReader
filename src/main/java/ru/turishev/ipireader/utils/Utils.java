@@ -6,9 +6,7 @@ import ru.turishev.ipireader.model.Task;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.StringJoiner;
 
 public class Utils {
@@ -22,7 +20,6 @@ public class Utils {
 	public static TasksDto convertToTasksDto(Task task) {
 		return TasksDto.from(task);
 	}
-
 
 	public static String getUrlbySearchForm(SearchForm searchForm) {
 		StringJoiner sj = new StringJoiner("&","?","");

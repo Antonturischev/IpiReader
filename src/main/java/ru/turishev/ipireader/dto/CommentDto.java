@@ -1,7 +1,5 @@
 package ru.turishev.ipireader.dto;
 
-import java.util.Date;
-
 import lombok.Builder;
 import lombok.Data;
 import ru.turishev.ipireader.model.Comment;

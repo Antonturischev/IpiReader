@@ -3,7 +3,6 @@ package ru.turishev.ipireader.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,8 +21,6 @@ public class User {
     @Column(name = "login")
     private String login;
 
-    private String password="123456";
-
     @Column(name = "fullname")
     private String fullName;
 
@@ -36,7 +33,7 @@ public class User {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_group_users", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "group_id")})
-    private List<Group> groups = new ArrayList<Group>();
+    private List<Group> groups;
 
     @OneToMany(mappedBy = "responsibleUser",fetch = FetchType.LAZY)
     private List<DivisionsTopic> respTopics;
