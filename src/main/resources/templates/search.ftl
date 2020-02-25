@@ -28,16 +28,14 @@
         </form>
     </div>
     <div>
-        <#if page?exists>
-            <@p.pager url page/>
-            <div class="container mt-5">
-                <h2>Заявки: </h2>
-                <@t.tasklist page/>
-            </div>
-        <#else>
-            <div class="container mt-5">
-                <h2>Заявок не найдено</h2>
-            </div>
-        </#if>
+	    <div class="container mt-5">
+	        <#if page?exists>
+	            <@p.pager url page/>
+	            <h2>Заявки: </h2>
+	            <@t.tasklist page/>
+	        <#else>
+	            <h2>Заявок не найдено</h2>           
+	        </#if>
+	    </div>
     </div>
 </@c.page>

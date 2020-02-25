@@ -3,6 +3,8 @@ package ru.turishev.ipireader.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,7 @@ public class TopicController {
     DivisionsTopicService divisionsTopicService;
 
     @GetMapping("/topic/{topic}")
-    public String getTasksByTopic(@PathVariable DivisionsTopic topic, Pageable pageable, Model model) {
+    public String getTasksByTopic(@PathVariable DivisionsTopic topic, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         Page<TasksDto> page = tasksService.getTasksByTopic(topic, pageable);
         model.addAttribute("topic", topic.getTitle());
         model.addAttribute("page", page);
