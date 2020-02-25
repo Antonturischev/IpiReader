@@ -22,6 +22,9 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
     
     @Query("from Task t where t.createdBy = :user")
 	Page<Task> findAllByCreatedBy(@Param("user")User user, Pageable pageable);
+    
+    @Query("from Task t where t.responsible =:user and t.status.name='completed'")
+	Page<Task> findAllByCompleteByMy(@Param("user")User usr, Pageable pageable);
 
     @Query(value = "select * from tasks_task tt where tt.id in ( select distinct t.id from tasks_task t " +
                         "inner join user_user u on t.created_by_id=u.id " +
@@ -48,6 +51,8 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
 
     @Query("from Task  t where t.divisionsTopic in (:topicList)")
     Page<Task> findByTopic(@Param("topicList") List<DivisionsTopic> topicList, Pageable pageable);
+
+
 
 
 }

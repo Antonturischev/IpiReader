@@ -46,4 +46,11 @@ public class TasksService {
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
 		return tasksDto;
 	}
+
+	public Page<TasksDto> getCompleteByMeTasks(User user, Pageable pageable) {
+		User usr = usersRepository.findById(user.getId()).get();
+		Page<Task> tasks = tasksRepository.findAllByCompleteByMy(usr, pageable);
+		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
+		return tasksDto;
+	}
 }
