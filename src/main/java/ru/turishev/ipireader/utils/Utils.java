@@ -27,6 +27,7 @@ public class Utils {
 		if(searchForm.getTheme()!=null) sj.add("theme="+searchForm.getTheme());
 		if(searchForm.getDescription()!=null) sj.add("description="+searchForm.getDescription());
 		if(searchForm.getComment()!=null) sj.add("comment="+searchForm.getComment());
+		if(searchForm.getResponsible()!=null) sj.add("responsible="+searchForm.getResponsible());
 		return sj.toString();
 	}
 }

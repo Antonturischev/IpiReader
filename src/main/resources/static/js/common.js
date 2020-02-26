@@ -16,10 +16,13 @@ function addField() {
 		case 'comment':	ph='Комментарий';
 						selectBox.options[selectBox.selectedIndex].disabled=true;
 						break;
+		case 'responsible':	ph='Ответственный';
+						selectBox.options[selectBox.selectedIndex].disabled=true;
+						break;
 		default: return false;
 				 break;
 	}
-	//div.attributes.
+
 	div.innerHTML = '<input class="input" name=\"'+selectedValue+'\" placeholder=\"'+ph+' содержит\" /> <a style="color:red;" selectCount="'+selectBox.selectedIndex+'" href="#" class="addInput" onclick="deleteField(this)">x</a>'
 	document.getElementById("parentId").appendChild(div);
 	return false;

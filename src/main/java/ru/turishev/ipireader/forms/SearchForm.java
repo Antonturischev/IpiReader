@@ -17,13 +17,15 @@ public class SearchForm {
     private String theme;
     private String description;
     private String comment;
+    private String responsible;
 
     public List<SearchParameter> toList() {
         List<SearchParameter> list = new ArrayList<>();
         list.add(new SearchParameter(1,"author","Автор",(author!=null)?author:"",(author!=null)?"disabled":""));
         list.add(new SearchParameter(2,"theme","Тема",(theme!=null)?theme:"",(theme!=null)?"disabled":""));
         list.add(new SearchParameter(3,"description","Описание",(description!=null)?description:"",(description!=null)?"disabled":""));
-        list.add(new SearchParameter(4,"comment","Коммент",(comment!=null)?comment:"",(comment!=null)?"disabled":""));
+        list.add(new SearchParameter(4,"comment","Комментарий",(comment!=null)?comment:"",(comment!=null)?"disabled":""));
+        list.add(new SearchParameter(5,"responsible","Ответственный",(responsible!=null)?responsible:"",(responsible!=null)?"disabled":""));
         return list;
     }
 

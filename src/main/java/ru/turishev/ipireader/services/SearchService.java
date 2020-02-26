@@ -9,9 +9,7 @@ import ru.turishev.ipireader.model.Task;
 import ru.turishev.ipireader.repositories.TasksRepository;
 import ru.turishev.ipireader.utils.SearchParameter;
 import ru.turishev.ipireader.utils.Utils;
-
 import java.util.List;
-
 
 @Service
 public class SearchService {
@@ -23,6 +21,7 @@ public class SearchService {
                                                                searchParameters.get(1).getSelectedValue().trim().toUpperCase(),
                                                                searchParameters.get(2).getSelectedValue().trim().toUpperCase(),
                                                                searchParameters.get(3).getSelectedValue().trim().toUpperCase(),
+                                                               searchParameters.get(4).getSelectedValue().trim().toUpperCase(),
                                                                pageable);
         Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
         return tasksDto;

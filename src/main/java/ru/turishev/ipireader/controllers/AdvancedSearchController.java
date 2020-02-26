@@ -27,6 +27,7 @@ public class AdvancedSearchController {
 								  @RequestParam(name = "theme",required = false) String theme,
 								  @RequestParam(name = "description",required = false) String description,
 								  @RequestParam(name = "comment",required = false) String comment,
+								  @RequestParam(name = "responsible",required = false) String responsible,
 								  @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
 								  Model model) {
 		SearchForm searchForm = SearchForm
@@ -35,6 +36,7 @@ public class AdvancedSearchController {
 					.theme(theme)
 					.description(description)
 					.comment(comment)
+					.responsible(responsible)
 				.build();
 		Page<TasksDto> tasks = searchService.getTasksBySearchParameters(searchForm.toList(),pageable);
 		List<SearchParameter> selectedParams = searchForm.toList();

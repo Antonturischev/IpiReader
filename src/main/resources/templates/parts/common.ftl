@@ -6,7 +6,6 @@
         <meta charset="UTF-8"/>
         <title>IpiReader</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="/static/css/style.css"/>
         <script src="/static/js/jquery-3.4.1.slim.min.js"></script>
