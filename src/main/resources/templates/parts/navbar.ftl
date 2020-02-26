@@ -15,7 +15,7 @@
                     <a class="dropdown-item" href="/4meandsubordinates">Заявки мне и подчиненным</a>
                     <a class="dropdown-item" href="/createdbymy">Созданные мной</a>
                     <a class="dropdown-item" href="/completedbyme">Выполненные мной</a>
-                    <a class="dropdown-item" href="#">Наблюдаемые мной</a>
+                    <a class="dropdown-item" href="/watching">Наблюдаемые мной</a>
                     <a class="dropdown-item" href="#">В работе</a>
                 </div>
             </li>

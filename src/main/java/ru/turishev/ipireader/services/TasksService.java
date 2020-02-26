@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 
 
 @Service
@@ -66,6 +67,17 @@ public class TasksService {
 			groups.addAll(u.getGroups());
 		}
 		Page<Task> tasks = tasksRepository.findTasks4MeAndSubordinates(users,new ArrayList<>(groups),pageable);
+		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
+		return tasksDto;
+	}
+
+	public Page<TasksDto> getWatchingTasks(User user, Pageable pageable) {
+		User usr = usersRepository.findById(user.getId()).get();
+		StringJoiner sj = new StringJoiner("','","'","'");
+		for(Group group:usr.getGroups()) {
+			sj.add(group.getCodename());
+		}
+		Page<Task> tasks = tasksRepository.findWatchingTasks(usr.getId(),sj.toString(),pageable);
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
 		return tasksDto;
 	}

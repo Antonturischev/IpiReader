@@ -9,7 +9,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.security.UserDetailsImpl;
 import ru.turishev.ipireader.services.TasksService;
@@ -51,6 +50,16 @@ public class HomeController {
         return "homepage";
     }
     
+    @GetMapping("/watching")
+    public String getWatchingTasks(@AuthenticationPrincipal UserDetailsImpl user, Model model, @PageableDefault(sort= {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    	Page<TasksDto> tasks = tasksService.getWatchingTasks(user.getUser(), pageable);
+    	if(tasks.getTotalPages()!=0) {
+            model.addAttribute("page",tasks);
+        }
+        model.addAttribute("url","/4meandsubordinates");
+        return "homepage";    	
+    }
+    
     @GetMapping("/")
     public String getHomePage(@AuthenticationPrincipal UserDetailsImpl user, Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<TasksDto> tasks = tasksService.getActiveTasksByUser(user.getUser(),pageable);
@@ -60,5 +69,4 @@ public class HomeController {
         model.addAttribute("url","/");
         return "homepage";
     }
-
 }
