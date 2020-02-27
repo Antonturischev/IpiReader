@@ -1,17 +1,77 @@
 .loginform{
     padding-top: 40Vh;
 }
- .nav-link-custom {
-     color: rgba(0,0,0,.5);
- }
+
 .card-header {
     padding: .1rem 1.25rem;
 }
 
 .input-group-pager {
-    width: 60px;
+    width: 280px;
 }
 
+/*------------------------------------navbar---------------------------------------------------*/
+.c-navbar-container {
+background-color: #0050b2;
+    background-image: radial-gradient(circle at 50% 15px,rgba(0,0,0,0) 0,rgba(0,0,0,0) 50%,#00276c 100%),url(/static/img/patterned-bg.png);
+    box-shadow: 0 3px 9px #c1c1c1;
+    border-bottom: 3px solid #003270;
+    position: relative;
+    z-index: 2;	
+}
+
+.nav-link-custom {
+    color: rgba(255,255,255,.5);
+}
+.nav-link-custom:hover{
+    color: red;
+}
+.c-search-button {
+	color: rgba(255,255,255,.5);
+    background-color: transparent;
+    background-image: none;
+    border-color: rgba(255,255,255,.5);
+}
+.c-search-button:hover {
+	color: rgba(255,255,255,.75);
+    background-color: transparent;
+    background-image: none;
+    border-color: rgba(255,255,255,.75);
+}
+
+
+/*------------------------------------Пагинация---------------------------------------------------*/
+
+.c-pagination-selector-container {
+	display:inline-block;
+	width: 290px;
+}
+.c-pagination-selector {
+	display: flex;
+}
+
+.input-group-prepend {
+	width:200px;	
+}
+
+.c-pagination-pages {
+	max-width: 50%;
+	display: inline-block;
+}
+.pagination {
+	margin-bottom=0;	
+}
+.custom-select {
+	width: 70px!important;
+	flex: 0 0 auto!important;		
+}
+.c-label {
+	color: #6c757d;
+    pointer-events: none;
+    cursor: auto;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
 /*------------------------------------Tree view---------------------------------------------------*/
 /* Remove default bullets */
 ul, #myUL {

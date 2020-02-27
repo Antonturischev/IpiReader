@@ -14,7 +14,25 @@
     <#else>
         <#assign body = 1..page.getTotalPages()>
     </#if>
-    <div class="mt-3">
+<div class="c-pagination">
+	<div class="c-pagination-selector-container">    
+	    <div class="input-group c-pagination-selector">
+		  <div class="input-group-prepend">
+		    <label class="input-group-text c-label" >Элементов на странице</label>
+		  </div>
+	        <select class="custom-select" onchange="location = this.value;">
+	            <#list [5, 10, 25, 50] as c>
+	                <#if c == page.getSize()>
+	                     <option selected value="#">${c}</option>
+	                <#else>
+	                    <option class="" value="${url}?page=${page.getNumber()}&size=${c}">${c}</option>
+	                </#if>
+	            </#list>
+	        </select>
+		</div>
+    </div> 
+    
+    <div class="c-pagination-pages">
         <ul class="pagination">
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1">Страницы</a>
@@ -35,18 +53,6 @@
                 </#if>
             </#list>
         </ul>
-
-
-    <div class="input-group input-group-pager">
-        <select class="custom-select" onchange="location = this.value;">
-            <#list [5, 10, 25, 50] as c>
-                <#if c == page.getSize()>
-                     <option selected value="#">${c}</option>
-                <#else>
-                    <option class="" value="${url}?page=${page.getNumber()}&size=${c}">${c}</option>
-                </#if>
-            </#list>
-        </select>
     </div>
-    </div>
+ </div>   
 </#macro>

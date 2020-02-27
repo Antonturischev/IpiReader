@@ -4,7 +4,6 @@
 <@c.page>
     <#include "parts/security.ftl">
     <#include "parts/navbar.ftl">
-
     <div class="container mt-5">
     <#if page?exists>
        <@p.pager url page/>
