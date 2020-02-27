@@ -27,6 +27,7 @@ public class TopicController {
         model.addAttribute("topic", topic.getTitle());
         model.addAttribute("page", page);
         model.addAttribute("url","/topic/"+topic.getId().toString());
+        model.addAttribute("dlm","?");
         return "topic";
     }
 

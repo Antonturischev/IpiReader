@@ -16,8 +16,8 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
 
     Optional<Task> findById(Long id);
 
-    @Query("from Task t where t.responsible =:user")
-    Page<Task> findTasksByResponsibleUser(Pageable pageable, @Param("user") User user);
+    @Query("from Task t where t.responsible =:user  or t.responsibleGroup in (:groups)")
+    Page<Task> findTasksByResponsibleUser(Pageable pageable, @Param("user") User user, @Param("groups") List<Group> groups);
     
     @Query("from Task t where t.createdBy = :user")
 	Page<Task> findAllByCreatedBy(@Param("user")User user, Pageable pageable);

@@ -6,8 +6,8 @@
     <#include "parts/navbar.ftl">
     <div class="container mt-5">
     <#if page?exists>
-       <@p.pager url page/>
-       		<h2>Заявки</h2>
+    	<h2>Заявки для вас</h2>
+       <@p.pager url page dlm/>
        <@t.tasklist page/>
        <#else>
        		<h2>Заявки отсутствуют</h2>

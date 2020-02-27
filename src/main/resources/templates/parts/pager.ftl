@@ -1,4 +1,4 @@
-<#macro pager url page>
+<#macro pager url page dlm>
     <#if page.getTotalPages() gt 7>
         <#assign
         totalPages = page.getTotalPages()
@@ -25,7 +25,7 @@
 	                <#if c == page.getSize()>
 	                     <option selected value="#">${c}</option>
 	                <#else>
-	                    <option class="" value="${url}?page=${page.getNumber()}&size=${c}">${c}</option>
+	                    <option class="" value="${url}${dlm}page=${page.getNumber()}&size=${c}">${c}</option>
 	                </#if>
 	            </#list>
 	        </select>
@@ -48,7 +48,7 @@
                     </li>
                 <#else>
                     <li class="page-item">
-                        <a class="page-link" href="${url}?page=${p - 1}&size=${page.getSize()}" tabindex="-1">${p}</a>
+                        <a class="page-link" href="${url}${dlm}page=${p - 1}&size=${page.getSize()}" tabindex="-1">${p}</a>
                     </li>
                 </#if>
             </#list>

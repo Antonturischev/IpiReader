@@ -1,5 +1,5 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/searchpager.ftl" as p>
+<#import "parts/pager.ftl" as p>
 <#import "parts/tasklist.ftl" as t>
 <@c.page>
     <#include "parts/security.ftl">
@@ -30,7 +30,7 @@
     <div>
 	    <div class="container mt-5">
 	        <#if page?exists>
-	            <@p.pager url page/>
+	            <@p.pager url page dlm/>
 	            <h2>Заявки: </h2>
 	            <@t.tasklist page/>
 	        <#else>

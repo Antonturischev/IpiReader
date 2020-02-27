@@ -72,6 +72,26 @@ background-color: #0050b2;
     background-color: #fff;
     border-color: #dee2e6;
 }
+
+/*------------------------------------Ёлементы списка за€вок---------------------------------------------------*/
+.card {
+	border-left:none;
+	border-right:none;
+	border-top:none;
+}
+.card-header {
+	background-color: transparent;
+    border-bottom: none;
+}
+.btn-link {
+    font-weight: 400;
+    color: #6c757d;
+}
+.btn-link:hover {
+    font-weight: 400;
+    color: #6c757d;
+    text-decoration: none;
+}
 /*------------------------------------Tree view---------------------------------------------------*/
 /* Remove default bullets */
 ul, #myUL {

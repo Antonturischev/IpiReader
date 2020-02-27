@@ -33,7 +33,7 @@ public class TasksService {
 
     public Page<TasksDto> getActiveTasksByUser(User user, Pageable pageable) {
         User usr = usersRepository.findById(user.getId()).get();
-		Page<Task> tasks = tasksRepository.findTasksByResponsibleUser(pageable, usr);
+		Page<Task> tasks = tasksRepository.findTasksByResponsibleUser(pageable, usr, usr.getGroups());
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
         return tasksDto;
     }

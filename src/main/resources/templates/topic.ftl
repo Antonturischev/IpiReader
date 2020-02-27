@@ -5,7 +5,7 @@
     <#include "parts/security.ftl">
     <#include "parts/navbar.ftl">
     <#if page?exists>
-        <@p.pager url page/>
+        <@p.pager url page dlm/>
     <div class="container mt-5">
         <h2>Заявки из раздела ${topic!''}</h2>
         <@t.tasklist page/>

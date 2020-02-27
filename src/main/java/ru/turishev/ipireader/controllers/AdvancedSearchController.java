@@ -46,6 +46,7 @@ public class AdvancedSearchController {
 			model.addAttribute("page", tasks);
 		}
 		model.addAttribute("url",url);
+		model.addAttribute("dlm","&");
 		return "search";	
 	}
 }

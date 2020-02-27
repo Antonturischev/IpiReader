@@ -27,6 +27,7 @@ public class HomeController {
         	model.addAttribute("page",tasks);
         }
         model.addAttribute("url","/createdbymy");
+        model.addAttribute("dlm","?");
     	return "homepage";
     }
     
@@ -37,6 +38,7 @@ public class HomeController {
         	model.addAttribute("page",tasks);
         }
         model.addAttribute("url","/completedbyme");
+        model.addAttribute("dlm","?");
     	return "homepage";
     }
 
@@ -47,6 +49,7 @@ public class HomeController {
             model.addAttribute("page",tasks);
         }
         model.addAttribute("url","/4meandsubordinates");
+        model.addAttribute("dlm","?");
         return "homepage";
     }
     
@@ -56,7 +59,8 @@ public class HomeController {
     	if(tasks.getTotalPages()!=0) {
             model.addAttribute("page",tasks);
         }
-        model.addAttribute("url","/4meandsubordinates");
+        model.addAttribute("url","/watching");
+        model.addAttribute("dlm","?");
         return "homepage";    	
     }
     
@@ -67,6 +71,7 @@ public class HomeController {
         	model.addAttribute("page",tasks);
         }
         model.addAttribute("url","/");
+        model.addAttribute("dlm","?");
         return "homepage";
     }
 }
