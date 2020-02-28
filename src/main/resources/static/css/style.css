@@ -130,6 +130,18 @@ background-color: #0050b2;
 	font-size: 13px;
 	text-align: justify!important;
 }
+
+/*------------------------------------Заявка---------------------------------------------------*/
+.c-container {
+	display:flex;
+	color:	#6c757d;
+}
+.blockquote p{
+	font-size: 15px;
+}
+.blockquote-footer {
+	font-size: 14px;
+}
 /*------------------------------------Tree view---------------------------------------------------*/
 /* Remove default bullets */
 ul, #myUL {

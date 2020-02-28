@@ -60,7 +60,6 @@ public class TasksDto {
 					.spectrators(task.getSpectrators().stream().map(x->x.getFullName()).collect(Collectors.toList()))
 					.spectratorsGroup(task.getSpectratorsGroup().stream().map(x->x.getName()).collect(Collectors.toList()))
 					.build();
-	
 		}
 	return null;		
 	}
