@@ -136,8 +136,12 @@ background-color: #0050b2;
 	display:flex;
 	color:	#6c757d;
 }
+.blockquote {
+	border-bottom: 1px ridge;
+}
 .blockquote p{
 	font-size: 15px;
+	
 }
 .blockquote-footer {
 	font-size: 14px;
