@@ -6,9 +6,8 @@
     <#include "parts/navbar.ftl">
 
     <div class="container mt-5">
-        <h2>Расширенный поиск</h2>
         <#if selectedParams?exists>
-        <select class="custom-select" id="selectBox" onchange="addField();">
+        <select class="custom-select search-select" id="selectBox" onchange="addField();">
             <option id="" value="">Критерий поиска</option>
             <#list selectedParams as param>
                 <option id="${param.parameter}" value="${param.parameter}" ${param.isSelected}>${param.value}</option>
@@ -19,22 +18,24 @@
             <div class="parentId" id="parentId">
                 <#list selectedParams as param>
                     <#if param.isSelected!="">
-                        <div><input class="input" name="${param.parameter}" value="${param.selectedValue}" />
+                        <div><input class="input selected-params-input" name="${param.parameter}" value="${param.selectedValue}" />
                         <a style="color:red;"  href="#" selectcount="${param.index}" class="addInput" onclick="deleteField(this)">x</a></div>
                     </#if>
                 </#list>
             </div>
-            <button type="submit" class="btn btn-primary">Найти</button>
+            <button type="submit" class="btn btn-primary mt-1">Найти</button>
         </form>
     </div>
     <div>
 	    <div class="container mt-5">
+            <h4 class="mb-4">Заявки: </h4>
 	        <#if page?exists>
 	            <@p.pager url page dlm/>
-	            <h2>Заявки: </h2>
 	            <@t.tasklist page/>
 	        <#else>
-	            <h2>Заявок не найдено</h2>           
+                <div class="alert alert-danger" role="alert">
+                    Заявок не найдено
+                </div>
 	        </#if>
 	    </div>
     </div>

@@ -23,7 +23,7 @@ function addField() {
 				 break;
 	}
 
-	div.innerHTML = '<input class="input" name=\"'+selectedValue+'\" placeholder=\"'+ph+' содержит\" /> <a style="color:red;" selectCount="'+selectBox.selectedIndex+'" href="#" class="addInput" onclick="deleteField(this)">x</a>'
+	div.innerHTML = '<input class="input selected-params-input" name=\"'+selectedValue+'\" placeholder=\"'+ph+' содержит\" /> <a style="color:red;" selectCount="'+selectBox.selectedIndex+'" href="#" class="addInput" onclick="deleteField(this)">x</a>'
 	document.getElementById("parentId").appendChild(div);
 	return false;
 }

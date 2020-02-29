@@ -5,10 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ru.turishev.ipireader.model.DivisionsTopic;
-import ru.turishev.ipireader.model.Group;
-import ru.turishev.ipireader.model.Task;
-import ru.turishev.ipireader.model.User;
+import ru.turishev.ipireader.model.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -75,4 +73,6 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
     @Query("from Task  t where t.divisionsTopic in (:topicList)")
     Page<Task> findByTopic(@Param("topicList") List<DivisionsTopic> topicList, Pageable pageable);
 
+	@Query("from Task  t where t.project.id = :id")
+    Page<Task> findAllByProject(@Param("id") Long id, Pageable pageable);
 }

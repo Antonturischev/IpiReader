@@ -49,7 +49,7 @@ background-color: #0050b2;
 }
 
 
-/*------------------------------------Пагинация---------------------------------------------------*/
+/*------------------------------------Pagination---------------------------------------------------*/
 
 .c-pagination-selector-container {
 	display:inline-block;
@@ -68,7 +68,7 @@ background-color: #0050b2;
 	display: inline-block;
 }
 .pagination {
-	margin-bottom=0;	
+	margin-bottom: 0;
 }
 .custom-select {
 	width: 70px!important;
@@ -82,7 +82,7 @@ background-color: #0050b2;
     border-color: #dee2e6;
 }
 
-/*------------------------------------Элементы списка заявок---------------------------------------------------*/
+/*------------------------------------Task list---------------------------------------------------*/
 .card {
 	border-left:none;
 	border-right:none;
@@ -131,13 +131,13 @@ background-color: #0050b2;
 	text-align: justify!important;
 }
 
-/*------------------------------------Заявка---------------------------------------------------*/
+/*------------------------------------Task---------------------------------------------------*/
 .c-container {
 	display:flex;
 	color:	#6c757d;
 }
 .blockquote {
-	border-bottom: 1px ridge;
+	border-bottom: 2px ridge;
 }
 .blockquote p{
 	font-size: 15px;
@@ -146,6 +146,31 @@ background-color: #0050b2;
 .blockquote-footer {
 	font-size: 14px;
 }
+
+.nowrap {
+    white-space: nowrap;
+}
+.delimiter {
+    border-bottom: 2px solid;
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+}
+.c-page-link{
+    color: #6c757d;
+}
+.c-page-link:hover{
+    text-decoration: none;
+}
+
+/*------------------------------------Search---------------------------------------------------*/
+.search-select {
+    width: 300px !important;
+}
+.selected-params-input {
+    width: 300px !important;
+}
+
 /*------------------------------------Tree view---------------------------------------------------*/
 /* Remove default bullets */
 ul, #myUL {

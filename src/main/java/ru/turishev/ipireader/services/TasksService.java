@@ -5,10 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.turishev.ipireader.dto.TasksDto;
-import ru.turishev.ipireader.model.DivisionsTopic;
-import ru.turishev.ipireader.model.Group;
-import ru.turishev.ipireader.model.Task;
-import ru.turishev.ipireader.model.User;
+import ru.turishev.ipireader.model.*;
 import ru.turishev.ipireader.repositories.TasksRepository;
 import ru.turishev.ipireader.repositories.UsersRepository;
 import ru.turishev.ipireader.utils.Utils;
@@ -22,23 +19,24 @@ import java.util.StringJoiner;
 
 @Service
 public class TasksService {
+
 	@Autowired
 	private TasksRepository tasksRepository;
-   	@Autowired
-	UsersRepository usersRepository;
-	
+	@Autowired
+	private UsersRepository usersRepository;
+
 	public TasksDto getById(Long id) {
 		return TasksDto.from(tasksRepository.findById(id));
 	}
 
-    public Page<TasksDto> getActiveTasksByUser(User user, Pageable pageable) {
-        User usr = usersRepository.findById(user.getId()).get();
+	public Page<TasksDto> getActiveTasksByUser(User user, Pageable pageable) {
+		User usr = usersRepository.findById(user.getId()).get();
 		Page<Task> tasks = tasksRepository.findTasksByResponsibleUser(pageable, usr, usr.getGroups());
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
-        return tasksDto;
-    }
+		return tasksDto;
+	}
 
-    public Page<TasksDto> getTasksByTopic(DivisionsTopic topic, Pageable pageable) {
+	public Page<TasksDto> getTasksByTopic(DivisionsTopic topic, Pageable pageable) {
 		List<DivisionsTopic> topicList = DivisionsTopicService.getChildTopics(topic);
 		Page<Task> tasks = tasksRepository.findByTopic(topicList,pageable);
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
@@ -59,7 +57,7 @@ public class TasksService {
 		return tasksDto;
 	}
 
-    public Page<TasksDto> getTasks4MeAndSubordinates(User user, Pageable pageable) {
+	public Page<TasksDto> getTasks4MeAndSubordinates(User user, Pageable pageable) {
 		User usr = usersRepository.findById(user.getId()).get();
 		List<User> users = UserService.getChildSubordinates(usr);
 		Set<Group> groups = new HashSet<>();
@@ -81,4 +79,13 @@ public class TasksService {
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
 		return tasksDto;
 	}
+
+	public Page<TasksDto> getTasksByProject(Long id, Pageable pageable) {
+
+		Page<Task> tasks = tasksRepository.findAllByProject(id, pageable);
+		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
+		return tasksDto;
+	}
 }
+
+

@@ -3,9 +3,12 @@
 <@c.page>
     <#include "parts/security.ftl">
     <#include "parts/navbar.ftl">
-    <ul id="myUL">
-        <@tt.treeView topics/>
-    </ul>
+    <div class="container mt-5">
+    <h4 class="mb-4">Разделы: </h4>
+        <ul id="myUL">
+            <@tt.treeView topics/>
+        </ul>
+    </div>
     <script>
         var toggler = document.getElementsByClassName("caret");
         var i;

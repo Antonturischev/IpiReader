@@ -13,6 +13,7 @@
 		                </a>
 		                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 		                	<a class="dropdown-item" href="/topics">По разделам</a>
+							<a class="dropdown-item" href="/projects">По проектам</a>
 		                    <a class="dropdown-item" href="/4meandsubordinates">Заявки мне и подчиненным</a>
 		                    <a class="dropdown-item" href="/createdbymy">Созданные мной</a>
 		                    <a class="dropdown-item" href="/completedbyme">Выполненные мной</a>
