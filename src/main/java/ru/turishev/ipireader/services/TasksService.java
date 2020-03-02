@@ -71,11 +71,11 @@ public class TasksService {
 
 	public Page<TasksDto> getWatchingTasks(User user, Pageable pageable) {
 		User usr = usersRepository.findById(user.getId()).get();
-		StringJoiner sj = new StringJoiner("','","'","'");
+		List<String> grp = new ArrayList<>();
 		for(Group group:usr.getGroups()) {
-			sj.add(group.getCodename());
+            grp.add(group.getCodename());
 		}
-		Page<Task> tasks = tasksRepository.findWatchingTasks(usr.getId(),sj.toString(),pageable);
+		Page<Task> tasks = tasksRepository.findWatchingTasks(usr.getId(),grp,pageable);
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
 		return tasksDto;
 	}

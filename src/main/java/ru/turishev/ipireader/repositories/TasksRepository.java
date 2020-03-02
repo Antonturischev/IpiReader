@@ -27,21 +27,21 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
     @Query("from Task t where t.responsible in (:users) or t.responsibleGroup in (:groups)")
     Page<Task> findTasks4MeAndSubordinates(@Param("users") List<User> users, @Param("groups") List<Group> groups, Pageable pageable);
 
-    @Query(value = "select t.* from tasks_task t " + 
+    @Query(value = "select distinct (t.*) from tasks_task t " +
     		"inner join tasks_task_spectators ts on t.id=ts.task_id " + 
     		"inner join user_user u on ts.user_id=u.id " + 
     		"inner join tasks_task_spectator_groups tsg on t.id = tsg.task_id " + 
     		"inner join user_group ug on tsg.group_id=ug.codename " +
-    		"where u.id=?1 or ug.codename in ('?2') or t.responsible_id=?1 or t.responsible_group_id in ('?2')", 
-    		countQuery = "select count(tt.id) from (select t.* from tasks_task t " + 
+    		"where u.id=?1 or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2",
+    		countQuery = "select count(distinct (tt.id)) from (select t.* from tasks_task t " +
     	    		"inner join tasks_task_spectators ts on t.id=ts.task_id " + 
     	    		"inner join user_user u on ts.user_id=u.id " + 
     	    		"inner join tasks_task_spectator_groups tsg on t.id = tsg.task_id " + 
     	    		"inner join user_group ug on tsg.group_id=ug.codename " +
-    	    		"where u.id=?1  or ug.codename in ('?2') or t.responsible_id=?1 or t.responsible_group_id in ('?2')" +
+    	    		"where u.id=?1  or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2" +
     	    ") tt",
     		nativeQuery = true)
-	Page<Task> findWatchingTasks(Long userid, String groups, Pageable pageable);
+	Page<Task> findWatchingTasks(Long userid, List<String> groups, Pageable pageable);
     
     @Query(value = "select * from tasks_task tt where tt.id in ( select distinct t.id from tasks_task t " +
                         "inner join user_user u on t.created_by_id=u.id " +
