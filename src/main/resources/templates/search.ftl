@@ -8,7 +8,7 @@
     <div class="container mt-5">
         <#if selectedParams?exists>
         <select class="custom-select search-select" id="selectBox" onchange="addField();">
-            <option id="" value="">Критерий поиска</option>
+            <option id="" value=""></option>
             <#list selectedParams as param>
                 <option id="${param.parameter}" value="${param.parameter}" ${param.isSelected}>${param.value}</option>
             </#list>

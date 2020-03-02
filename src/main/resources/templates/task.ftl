@@ -36,9 +36,9 @@
     </div>
     <div class="col-sm-4">
     	<p><b>Автор:</b> ${task.getAuthor()}</p>
-    		<#if task.getStatus()="completed"><p><b>Статус:</b> <span  class="badge badge-pill badge-success">${task.getStatus()}</span></p>
+    		<#if task.getStatus()="Completed"><p><b>Статус:</b> <span  class="badge badge-pill badge-success">${task.getStatus()}</span></p>
 	        <#else>
-	            <#if task.getStatus()="canceled"><p><b>Статус:</b> <span class="badge badge-pill badge-danger">${task.getStatus()}</span></p>
+	            <#if task.getStatus()="Canceled"><p><b>Статус:</b> <span class="badge badge-pill badge-danger">${task.getStatus()}</span></p>
 	            <#else><p><b>Статус:</b> <span class="badge badge-pill badge-primary">${task.getStatus()}</span></p>
 	            </#if>
 	        </#if>
