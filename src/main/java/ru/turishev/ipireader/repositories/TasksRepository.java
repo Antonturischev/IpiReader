@@ -32,13 +32,19 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
     		"left join user_user u on ts.user_id=u.id " +
     		"left join tasks_task_spectator_groups tsg on t.id = tsg.task_id " +
     		"left join user_group ug on tsg.group_id=ug.codename " +
-    		"where u.id=?1 or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2 ",
+    		"left join divisions_topicaccessgrants dtag on t.topic_id=dtag.topic_id "+
+    		"where u.id=?1 or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2 "+
+    		"or (dtag.user_id = ?1 and (dtag.is_manager='true' or dtag.is_spectator = 'true')) " +
+    		"or (dtag.group_id in ?2 and (dtag.is_manager='true' or dtag.is_spectator = 'true'))" ,
     		countQuery = "select count(distinct (tt.id)) from (select t.* from tasks_task t " +
     	    		"left join tasks_task_spectators ts on t.id=ts.task_id " +
     	    		"left join user_user u on ts.user_id=u.id " +
     	    		"left join tasks_task_spectator_groups tsg on t.id = tsg.task_id " +
     	    		"left join user_group ug on tsg.group_id=ug.codename " +
-    	    		"where u.id=?1  or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2" +
+    	    		"left join divisions_topicaccessgrants dtag on t.topic_id=dtag.topic_id "+
+    	    		"where u.id=?1  or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2 " +
+    	    		"or (dtag.user_id = ?1 and (dtag.is_manager='true' or dtag.is_spectator = 'true')) " +
+    	    		"or (dtag.group_id in ?2 and (dtag.is_manager='true' or dtag.is_spectator = 'true')) "+
     	    ") tt",
     		nativeQuery = true)
 	Page<Task> findWatchingTasks(Long userid, List<String> groups, Pageable pageable);

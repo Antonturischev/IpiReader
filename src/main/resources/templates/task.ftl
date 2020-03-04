@@ -49,7 +49,7 @@
         	<p><b>Дата изменения:</b> ${task.getDateChanged()}</p>
         </#if>
         <#if task.getDateClosed()??>
-        	<p><b>Дата изменения:</b> ${task.getDateClosed()}</p>
+        	<p><b>Дата закрытия:</b> ${task.getDateClosed()}</p>
         </#if>
         <p><b>Приоритет:</b> ${task.getPriority()}</p>
         <#if task.getProject()??>

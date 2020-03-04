@@ -38,11 +38,14 @@ public class AdvancedSearchController {
 					.comment(comment)
 					.responsible(responsible)
 				.build();
-		Page<TasksDto> tasks = searchService.getTasksBySearchParameters(searchForm.toList(),pageable);
+		Page<TasksDto> tasks = null;
+		if(author!=null||theme!=null||description!=null||comment!=null||responsible!=null) {
+			tasks = searchService.getTasksBySearchParameters(searchForm.toList(),pageable);	
+		}
 		List<SearchParameter> selectedParams = searchForm.toList();
 		String url = "/search"+Utils.getUrlbySearchForm(searchForm);
 		model.addAttribute("selectedParams", selectedParams);
-		if(tasks.getTotalPages()!=0){
+		if(tasks!=null&&tasks.getTotalPages()!=0){
 			model.addAttribute("page", tasks);
 		}
 		model.addAttribute("url",url);
