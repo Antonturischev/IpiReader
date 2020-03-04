@@ -32,9 +32,11 @@ public class TasksDto {
 	private String dateAdded;
 	private String dateChanged;
 	private String dateClosed;
-	private List<CommentDto> commenst;
+	private List<CommentDto> comments;
 	private List<String> spectrators;
 	private List<String> spectratorsGroup;
+	private List<String> usersFromTopic;
+	private List<String> groupFromTopic;
 	private List<Attachment> attachments;
 
 	public static TasksDto from(Optional<Task> taskOptional) {
@@ -56,9 +58,19 @@ public class TasksDto {
 					.dateAdded(Utils.convertTimestampToString(task.getDateAdded()))
 					.dateChanged((task.getDateChanged()!=null)?Utils.convertTimestampToString(task.getDateChanged()):null)
 					.dateClosed((task.getDateClosed()!=null)?Utils.convertTimestampToString(task.getDateClosed()):null)
-					.commenst(task.getComments().stream().map(x->CommentDto.from(x)).collect(Collectors.toList()))
+					.comments(task.getComments().stream().map(x->CommentDto.from(x)).collect(Collectors.toList()))
 					.spectrators(task.getSpectrators().stream().map(x->x.getFullName()).collect(Collectors.toList()))
 					.spectratorsGroup(task.getSpectratorsGroup().stream().map(x->x.getName()).collect(Collectors.toList()))
+					.usersFromTopic(task.getDivisionsTopic().getTopicAccessGrant().stream().map(
+							x->{
+								if (x.getUser()!=null&&(x.is_manager()||x.is_spectator())) return x.getUser().getFullName();
+								else return null;
+								}).filter(x->x!=null).collect(Collectors.toList()))
+					.groupFromTopic(task.getDivisionsTopic().getTopicAccessGrant().stream().map(
+							x->{
+								if (x.getGroup()!=null&&(x.is_manager()||x.is_spectator())) return x.getGroup().getName();
+								else return null;
+								}).filter(x->x!=null).collect(Collectors.toList()))
 					.build();
 		}
 	return null;		
@@ -80,10 +92,19 @@ public class TasksDto {
 					.dateAdded(Utils.convertTimestampToString(task.getDateAdded()))
 					.dateChanged((task.getDateChanged()!=null)?Utils.convertTimestampToString(task.getDateChanged()):null)
 					.dateClosed((task.getDateClosed()!=null)?Utils.convertTimestampToString(task.getDateClosed()):null)
-					.commenst(task.getComments().stream().map(x->CommentDto.from(x)).collect(Collectors.toList()))
+					.comments(task.getComments().stream().map(x->CommentDto.from(x)).collect(Collectors.toList()))
 					.spectrators(task.getSpectrators().stream().map(x->x.getFullName()).collect(Collectors.toList()))
 					.spectratorsGroup(task.getSpectratorsGroup().stream().map(x->x.getName()).collect(Collectors.toList()))
-					.build();
-	
+					.usersFromTopic(task.getDivisionsTopic().getTopicAccessGrant().stream().map(
+							x->{
+								if (x.getUser()!=null&&(x.is_manager()||x.is_spectator())) return x.getUser().getFullName();
+								else return null;
+								}).filter(x->x!=null).collect(Collectors.toList()))
+					.groupFromTopic(task.getDivisionsTopic().getTopicAccessGrant().stream().map(
+							x->{
+								if (x.getGroup()!=null&&(x.is_manager()||x.is_spectator())) return x.getGroup().getName();
+								else return null;
+								}).filter(x->x!=null).collect(Collectors.toList()))
+					.build();	
 		}
 }

@@ -25,8 +25,8 @@
         <p><b>Описание:</b> ${task.getDescription()}</p>
 
         <span class="delimiter"></span>
-        <#if task.getCommenst()?has_content>
-			<#list task.getCommenst() as comment>
+        <#if task.getComments()?has_content>
+			<#list task.getComments() as comment>
 				<blockquote class="blockquote">
 					<p class="mb-0">${comment.getText()}</p>
 					<footer class="blockquote-footer">${comment.getAuthor()} <cite title="Source Title">${comment.getDateAdded()}</cite></footer>
@@ -64,13 +64,25 @@
 	    	</#if>
     	</p>
     	<div>
-	    	<#if task.getSpectratorsGroup()??>
+	    	<#if task.getGroupFromTopic()?has_content>
+	    	<span><b>Группы из раздела:</b></span>
+	    		<#list task.getGroupFromTopic() as group>
+	    			<span class="nowrap">${group}</span>
+	    		</#list>
+	    	</#if>    	
+	    	<#if task.getSpectratorsGroup()?has_content>
 	    	<span><b>Группы наблюдателей:</b></span>
 	    		<#list task.getSpectratorsGroup() as group>
 	    			<span class="nowrap">${group}</span>
 	    		</#list>
 	    	</#if>
-	    	<#if task.getSpectrators()??>
+	    	<#if task.getUsersFromTopic()?has_content>
+	    	<br/><b>Наблюдатели из раздела:</b>
+	    		<#list task.getUsersFromTopic() as user>
+	    			<span class="nowrap">${user}</span>
+	    		</#list>
+	    	</#if>
+	    	<#if task.getSpectrators()?has_content>
 	    	<br/><b>Наблюдатели:</b>
 	    		<#list task.getSpectrators() as spectrator>
 	    			<span class="nowrap">${spectrator}</span>

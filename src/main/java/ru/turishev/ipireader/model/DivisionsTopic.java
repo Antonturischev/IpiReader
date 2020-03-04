@@ -1,7 +1,6 @@
 package ru.turishev.ipireader.model;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -35,4 +34,7 @@ public class DivisionsTopic {
 
     @OneToMany(mappedBy = "divisionsTopic", fetch = FetchType.LAZY)
     private List<Task> tasks;
+    
+    @OneToMany(mappedBy = "topic", fetch = FetchType.EAGER)
+    private List<TopicAccessGrant> topicAccessGrant;
 }

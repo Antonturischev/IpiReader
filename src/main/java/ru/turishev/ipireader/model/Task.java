@@ -21,7 +21,7 @@ public class Task {
     @Column(name = "subject")
     private String subject;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "topic_id")
     private DivisionsTopic divisionsTopic;
 
@@ -33,7 +33,7 @@ public class Task {
     @JoinColumn(name = "parent_task_id")
     private Task parent;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent" )
     private List<Task> children;
 
     @ManyToMany
@@ -88,7 +88,7 @@ public class Task {
     @ManyToMany
     @JoinTable(name = "tasks_task_spectator_groups", joinColumns = {@JoinColumn(name = "task_id")}, inverseJoinColumns = {@JoinColumn(name = "group_id")})
     private List<Group> spectratorsGroup;
-
+        
     @OneToMany
     @JoinColumn(name = "task_id")
     private List<Attachment> attachments;

@@ -14,7 +14,7 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
 
     Optional<Task> findById(Long id);
 
-    @Query("from Task t where t.responsible =:user  or t.responsibleGroup in (:groups)")
+    @Query("from Task t where t.responsible =:user  or t.responsibleGroup in (:groups) and t.status.name not in ('Completed', 'Canceled')")
     Page<Task> findTasksByResponsibleUser(Pageable pageable, @Param("user") User user, @Param("groups") List<Group> groups);
     
     @Query("from Task t where t.createdBy = :user")
@@ -32,23 +32,13 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
     		"left join user_user u on ts.user_id=u.id " +
     		"left join tasks_task_spectator_groups tsg on t.id = tsg.task_id " +
     		"left join user_group ug on tsg.group_id=ug.codename " +
-			"left join taskaccess_accessible ta on t.id=ta.task_id " +
-			"left join user_user u1 on ta.user_id=u1.id " +
-			"left join taskaccess_groupaccessible tag on t.id=tag.task_id " +
-			"left join user_group ug1 on tag.group_id=ug1.codename "+
-    		"where u.id=?1 or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2 " +
-				" or u1.id=?1 or ug1.codename in ?2",
+    		"where u.id=?1 or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2 ",
     		countQuery = "select count(distinct (tt.id)) from (select t.* from tasks_task t " +
     	    		"left join tasks_task_spectators ts on t.id=ts.task_id " +
     	    		"left join user_user u on ts.user_id=u.id " +
     	    		"left join tasks_task_spectator_groups tsg on t.id = tsg.task_id " +
     	    		"left join user_group ug on tsg.group_id=ug.codename " +
-					"left join taskaccess_accessible ta on t.id=ta.task_id " +
-					"left join user_user u1 on ta.user_id=u1.id "+
-					"left join taskaccess_groupaccessible tag on t.id=tag.task_id " +
-					"left join user_group ug1 on tag.group_id=ug1.codename "+
     	    		"where u.id=?1  or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2" +
-					" or u1.id=?1 or ug1.codename in ?2" +
     	    ") tt",
     		nativeQuery = true)
 	Page<Task> findWatchingTasks(Long userid, List<String> groups, Pageable pageable);

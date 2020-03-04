@@ -16,7 +16,7 @@ public class Group {
     @Column(name = "codename")
     private String codename;
     @Column(name = "name")
-    public String name;
+    private String name;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_group_users", joinColumns = {@JoinColumn(name = "group_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
