@@ -11,7 +11,7 @@
        <@t.tasklist page/>
        <#else>
            <div class="alert alert-danger" role="alert">
-               Зяавки отсутствуют
+               Заявки отсутствуют
            </div>
     </#if>
  	</div>

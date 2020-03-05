@@ -14,13 +14,13 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
 
     Optional<Task> findById(Long id);
 
-    @Query("from Task t where t.responsible =:user  or t.responsibleGroup in (:groups) and t.status.name not in ('Completed', 'Canceled')")
+    @Query("from Task t where t.responsible =:user  or t.responsibleGroup in (:groups) and UPPER(t.status.name) not in ('COMPLETED', 'CANCELED')")
     Page<Task> findTasksByResponsibleUser(Pageable pageable, @Param("user") User user, @Param("groups") List<Group> groups);
     
     @Query("from Task t where t.createdBy = :user")
 	Page<Task> findAllByCreatedBy(@Param("user")User user, Pageable pageable);
     
-    @Query("from Task t where t.responsible =:user and t.status.name='completed'")
+    @Query("from Task t where t.responsible =:user and UPPER(t.status.name)='COMPLETED'")
 	Page<Task> findAllByCompleteByMy(@Param("user")User usr, Pageable pageable);
 
 
@@ -34,8 +34,8 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
     		"left join user_group ug on tsg.group_id=ug.codename " +
     		"left join divisions_topicaccessgrants dtag on t.topic_id=dtag.topic_id "+
     		"where u.id=?1 or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2 "+
-    		"or (dtag.user_id = ?1 and (dtag.is_manager='true' or dtag.is_spectator = 'true')) " +
-    		"or (dtag.group_id in ?2 and (dtag.is_manager='true' or dtag.is_spectator = 'true'))" ,
+    		"or (dtag.user_id = ?1 and dtag.is_spectator = 'true') " +
+    		"or (dtag.group_id in ?2 and dtag.is_spectator = 'true')" ,
     		countQuery = "select count(distinct (tt.id)) from (select t.* from tasks_task t " +
     	    		"left join tasks_task_spectators ts on t.id=ts.task_id " +
     	    		"left join user_user u on ts.user_id=u.id " +
@@ -43,8 +43,8 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
     	    		"left join user_group ug on tsg.group_id=ug.codename " +
     	    		"left join divisions_topicaccessgrants dtag on t.topic_id=dtag.topic_id "+
     	    		"where u.id=?1  or ug.codename in ?2 or t.responsible_id=?1 or t.responsible_group_id in ?2 " +
-    	    		"or (dtag.user_id = ?1 and (dtag.is_manager='true' or dtag.is_spectator = 'true')) " +
-    	    		"or (dtag.group_id in ?2 and (dtag.is_manager='true' or dtag.is_spectator = 'true')) "+
+    	    		"or (dtag.user_id = ?1 and dtag.is_spectator = 'true') " +
+    	    		"or (dtag.group_id in ?2 and dtag.is_spectator = 'true') "+
     	    ") tt",
     		nativeQuery = true)
 	Page<Task> findWatchingTasks(Long userid, List<String> groups, Pageable pageable);

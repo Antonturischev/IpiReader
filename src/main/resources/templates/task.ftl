@@ -3,7 +3,7 @@
     <#include "parts/security.ftl">
     <#include "parts/navbar.ftl">
     <div class="container mt-5 c-container">
-    <#if task??>
+    <#if task?exists>
     <div class="col-sm-8">
         <h6><b>Номер задачи:</b> ${task.getId()}</h6>
     	<p><b>Раздел:</b>
@@ -22,7 +22,7 @@
     		</p>
     	</#if>         
         <p><b>Тема:</b> ${task.getSubject()}</p>
-        <p><b>Описание:</b> ${task.getDescription()}</p>
+        <p><b>Описание:</b> <#if task.getDescription()?exists>${task.getDescription()}</#if></p>
 
         <span class="delimiter"></span>
         <#if task.getComments()?has_content>

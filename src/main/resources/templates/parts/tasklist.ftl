@@ -24,6 +24,8 @@
                         <div class="card-body c-card-body">
                         	<#if task.getDescription()?exists>
                             	<p>${task.getDescription()}</p> <a href="/task/${task.getId()?c}">подробнее...</a>
+                            <#else>
+                            	<a href="/task/${task.getId()?c}">подробнее...</a>
                             </#if>	
                         </div>
                     </div>
@@ -31,6 +33,6 @@
             </div>
         </#list>
     <#else>
-        <p>У вас нет активных заявок</p>
+        <p>Заявки отсутствуют</p>
     </#if>
 </#macro>
