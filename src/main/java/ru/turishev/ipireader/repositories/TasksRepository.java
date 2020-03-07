@@ -14,7 +14,7 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
 
     Optional<Task> findById(Long id);
 
-    @Query("from Task t where t.responsible =:user  or t.responsibleGroup in (:groups) and UPPER(t.status.name) not in ('COMPLETED', 'CANCELED')")
+    @Query("from Task t where  UPPER(t.status.name) not in ('COMPLETED','CANCELED') and (t.responsible =:user  or t.responsibleGroup in (:groups))")
     Page<Task> findTasksByResponsibleUser(Pageable pageable, @Param("user") User user, @Param("groups") List<Group> groups);
     
     @Query("from Task t where t.createdBy = :user")
