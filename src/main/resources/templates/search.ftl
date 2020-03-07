@@ -18,7 +18,7 @@
             <div class="parentId" id="parentId">
                 <#list selectedParams as param>
                     <#if param.isSelected!="">
-                        <div><input class="input selected-params-input" name="${param.parameter}" value="${param.selectedValue}" />
+                        <div><input type="${param.type}" class="input selected-params-input" name="${param.parameter}" value="${param.selectedValue}" />
                         <a style="color:red;"  href="#" selectcount="${param.index}" class="addInput" onclick="deleteField(this)">x</a></div>
                     </#if>
                 </#list>

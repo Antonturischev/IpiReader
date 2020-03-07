@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.turishev.ipireader.model.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +63,8 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
                         "and COALESCE(UPPER(m.text),'') like %?3% " +
                         "and COALESCE(UPPER(mm.text),'') like %?4% " +
 						"and (COALESCE(UPPER(ur.fullname),'') like %?5% " +
-						"or COALESCE(UPPER(ug.name),'') like %?5%))",
+						"or COALESCE(UPPER(ug.name),'') like %?5%) " +
+						"and COALESCE(t.date_added,'1990-01-01 00:00:00')>?6 and COALESCE(t.date_added, '2030-01-01 00:00:00')<?7)",
           countQuery = "select count(distinct(t.id)) from tasks_task t " +
                         "left join user_user u on t.created_by_id=u.id " +
                         "left join markup_markup m on t.description_id = m.id " +
@@ -76,9 +78,10 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
                         "and COALESCE(UPPER(m.text),'') like %?3% " +
                         "and COALESCE(UPPER(mm.text),'') like %?4%  " +
 				  		"and (COALESCE(UPPER(ur.fullname),'') like %?5% " +
-				  		"or COALESCE(UPPER(ug.name),'') like %?5%)",
+				  		"or COALESCE(UPPER(ug.name),'') like %?5%)" +
+				  		"and t.date_added<?6 and t.date_added>?7",
           nativeQuery = true)
-    Page<Task> findTasksByVarParam(String author, String subject, String description, String comment, String responsible, Pageable pageable);
+    Page<Task> findTasksByVarParam(String author, String subject, String description, String comment, String responsible, Timestamp datecreatedd, Timestamp datecreatedu, Pageable pageable);
 
     @Query("from Task  t where t.divisionsTopic in (:topicList)")
     Page<Task> findByTopic(@Param("topicList") List<DivisionsTopic> topicList, Pageable pageable);

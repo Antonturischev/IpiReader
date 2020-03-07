@@ -28,6 +28,8 @@ public class AdvancedSearchController {
 								  @RequestParam(name = "description",required = false) String description,
 								  @RequestParam(name = "comment",required = false) String comment,
 								  @RequestParam(name = "responsible",required = false) String responsible,
+								  @RequestParam(name = "datecreatedd",required = false) String datecreatedd,
+								  @RequestParam(name = "datecreatedu",required = false) String datecreatedu,
 								  @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
 								  Model model) {
 		SearchForm searchForm = SearchForm
@@ -37,9 +39,11 @@ public class AdvancedSearchController {
 					.description(description)
 					.comment(comment)
 					.responsible(responsible)
+					.datecreatedd(datecreatedd)
+					.datecreatedu(datecreatedu)
 				.build();
 		Page<TasksDto> tasks = null;
-		if(author!=null||theme!=null||description!=null||comment!=null||responsible!=null) {
+		if(author!=null||theme!=null||description!=null||comment!=null||responsible!=null||datecreatedd!=null||datecreatedu!=null) {
 			tasks = searchService.getTasksBySearchParameters(searchForm.toList(),pageable);	
 		}
 		List<SearchParameter> selectedParams = searchForm.toList();

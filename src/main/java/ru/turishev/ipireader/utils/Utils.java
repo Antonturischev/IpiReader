@@ -28,6 +28,8 @@ public class Utils {
 		if(searchForm.getDescription()!=null) sj.add("description="+searchForm.getDescription());
 		if(searchForm.getComment()!=null) sj.add("comment="+searchForm.getComment());
 		if(searchForm.getResponsible()!=null) sj.add("responsible="+searchForm.getResponsible());
+		if(searchForm.getDatecreatedd()!=null) sj.add("datecreatedd="+searchForm.getDatecreatedd());
+		if(searchForm.getDatecreatedu()!=null) sj.add("datecreatedu="+searchForm.getDatecreatedu());
 		return sj.toString();
 	}
 }

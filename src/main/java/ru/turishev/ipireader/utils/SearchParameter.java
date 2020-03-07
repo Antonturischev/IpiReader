@@ -13,4 +13,5 @@ public class SearchParameter {
     private String value;
     private String selectedValue;
     private String isSelected;
+    private String type;
 }
