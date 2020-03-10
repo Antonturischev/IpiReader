@@ -79,7 +79,7 @@ public class Task {
 
     @OneToMany
     @JoinColumn(name = "task_id")
-    @OrderBy("id desc")
+    @OrderBy("id asc")
     private List<Comment> comments;
 
     @ManyToMany
