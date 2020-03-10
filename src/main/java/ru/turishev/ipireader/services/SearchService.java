@@ -17,19 +17,17 @@ import java.util.List;
 public class SearchService {
     @Autowired
     private TasksRepository tasksRepository;
+
     public Page<TasksDto> getTasksBySearchParameters(List<SearchParameter> searchParameters, Pageable pageable) {
-    	String datecreatedd = searchParameters.get(5).getSelectedValue().trim();
-    	String datecreatedu = searchParameters.get(6).getSelectedValue().trim();
-    	datecreatedd = (datecreatedd.equals(""))?"1990-01-01 00:00:00":datecreatedd+" 00:00:00";
-    	datecreatedu = (datecreatedu.equals(""))?"2030-01-01 00:00:00":datecreatedu+" 23:59:59";
-    	
+        String datecreatedd=(searchParameters.get(5).getSelectedValue().equals(""))?"1990-01-01 00:00:00":searchParameters.get(5).getSelectedValue()+" 00:00:00";
+        String datecreateud=(searchParameters.get(6).getSelectedValue().equals(""))?"2030-01-01 00:00:00":searchParameters.get(6).getSelectedValue()+" 23:59:59";
         Page<Task> tasks = tasksRepository.findTasksByVarParam(searchParameters.get(0).getSelectedValue().trim().toUpperCase(),
                                                                searchParameters.get(1).getSelectedValue().trim().toUpperCase(),
                                                                searchParameters.get(2).getSelectedValue().trim().toUpperCase(),
                                                                searchParameters.get(3).getSelectedValue().trim().toUpperCase(),
                                                                searchParameters.get(4).getSelectedValue().trim().toUpperCase(),
-                                                               Timestamp.valueOf(datecreatedd),
-                                                               Timestamp.valueOf(datecreatedu),
+                                                               Timestamp.valueOf(datecreatedd.trim()),
+                                                               Timestamp.valueOf(datecreateud.trim()),
                 pageable);
         Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
         return tasksDto;
