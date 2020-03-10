@@ -9,13 +9,10 @@ import ru.turishev.ipireader.model.*;
 import ru.turishev.ipireader.repositories.TasksRepository;
 import ru.turishev.ipireader.repositories.UsersRepository;
 import ru.turishev.ipireader.utils.Utils;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.StringJoiner;
-
 
 @Service
 public class TasksService {

@@ -2,7 +2,6 @@ package ru.turishev.ipireader.model;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
