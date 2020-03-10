@@ -3,6 +3,8 @@ package ru.turishev.ipireader.model;
 import lombok.*;
 
 import javax.persistence.*;
+
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -47,4 +49,7 @@ public class User {
     @ManyToMany
     @JoinTable(name = "tasks_task_spectators", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "task_id")})
     private List<Task> spectTasks;
+    
+    @Column(name="date_removed")
+    private Timestamp dateRemoved;
 }

@@ -8,6 +8,7 @@
 	                            <a class="btn btn-link collapsed c-task-item-a" data-toggle="collapse" data-target="#collapse${task.getId()?c}" aria-expanded="true" aria-controls="collapse${task.getId()?c}">
 	                                <b>${task.getId()?c} ${task.getAuthor()}</b> 
 	                                <p class="c-item-subscription">${task.getSubject()}</p>
+
 	                            </a>
                             </div>
                             <div class="c-card-header-status">
@@ -17,8 +18,7 @@
 	                              	<#if task.getStatus()="Canceled"><i style="color:red" class="oi oi-circle-x"></i>
 	                              	<#else><i style="color:blue" class="oi oi-arrow-circle-right"></i>
 	                               	</#if>
-	                             </#if>
-	                        </div>
+	                             </#if></div>
                     </div>
                     <div id="collapse${task.getId()?c}" class="collapse" aria-labelledby="headingOne${task.getId()?c}" data-parent="#accordion${task.getId()?c}">
                         <div class="card-body c-card-body">

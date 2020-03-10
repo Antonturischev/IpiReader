@@ -79,7 +79,7 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
                         "and COALESCE(UPPER(mm.text),'') like %?4%  " +
 				  		"and (COALESCE(UPPER(ur.fullname),'') like %?5% " +
 				  		"or COALESCE(UPPER(ug.name),'') like %?5%)" +
-				  		"and t.date_added<?6 and t.date_added>?7",
+				  		"and COALESCE(t.date_added,'1990-01-01 00:00:00')>?6 and COALESCE(t.date_added, '2030-01-01 00:00:00')<?7",
           nativeQuery = true)
     Page<Task> findTasksByVarParam(String author, String subject, String description, String comment, String responsible, Timestamp datecreatedd, Timestamp datecreatedu, Pageable pageable);
 

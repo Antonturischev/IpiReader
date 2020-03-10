@@ -3,7 +3,9 @@ package ru.turishev.ipireader.services;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.turishev.ipireader.model.DivisionsTopic;

@@ -28,8 +28,8 @@ public class SearchForm {
         list.add(new SearchParameter(3,"description","Описание",(description!=null)?description:"",(description!=null)?"disabled":"", "text"));
         list.add(new SearchParameter(4,"comment","Комментарий",(comment!=null)?comment:"",(comment!=null)?"disabled":"", "text"));
         list.add(new SearchParameter(5,"responsible","Ответственный",(responsible!=null)?responsible:"",(responsible!=null)?"disabled":"", "text"));
-        list.add(new SearchParameter(6,"datecreatedd","Дата создания больше",(!datecreatedd.equals(""))?datecreatedd:"1990-01-01 00:00:00",(datecreatedd.equals(""))?"disabled":"", "date"));
-        list.add(new SearchParameter(7,"datecreatedu","Дата создания меньше",(!datecreatedu.equals(""))?datecreatedu:"2030-01-01 00:00:00",(datecreatedu.equals(""))?"disabled":"", "date"));
+        list.add(new SearchParameter(6,"datecreatedd","Дата создания больше",(datecreatedd!=null)?datecreatedd:"1990-01-01",(datecreatedd!=null)?"disabled":"", "date"));
+        list.add(new SearchParameter(7,"datecreatedu","Дата создания меньше",(datecreatedu!=null)?datecreatedu:"2030-01-01",(datecreatedu!=null)?"disabled":"", "date"));
         return list;
     }
 
