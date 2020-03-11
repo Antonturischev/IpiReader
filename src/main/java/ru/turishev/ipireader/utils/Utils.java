@@ -7,6 +7,7 @@ import ru.turishev.ipireader.model.Task;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.StringJoiner;
 
 public class Utils {
@@ -21,7 +22,7 @@ public class Utils {
 		return TasksDto.from(task);
 	}
 
-	public static String getUrlbySearchForm(SearchForm searchForm) {
+	public static String getUrlbySearchForm(SearchForm searchForm, List<String> statuses) {
 		StringJoiner sj = new StringJoiner("&","?","");
 		if(searchForm.getAuthor()!=null) sj.add("author="+searchForm.getAuthor());
 		if(searchForm.getTheme()!=null) sj.add("theme="+searchForm.getTheme());
@@ -30,6 +31,7 @@ public class Utils {
 		if(searchForm.getResponsible()!=null) sj.add("responsible="+searchForm.getResponsible());
 		if(searchForm.getDatecreatedd()!=null) sj.add("datecreatedd="+searchForm.getDatecreatedd());
 		if(searchForm.getDatecreatedu()!=null) sj.add("datecreatedu="+searchForm.getDatecreatedu());
+		statuses.forEach(s->sj.add("statuses="+s));
 		return sj.toString();
 	}
 }

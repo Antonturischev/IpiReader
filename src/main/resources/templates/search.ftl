@@ -6,6 +6,7 @@
     <#include "parts/navbar.ftl">
 
     <div class="container mt-5">
+
         <#if selectedParams?exists>
         <select class="custom-select search-select" id="selectBox" onchange="addField();">
             <option id="" value=""></option>
@@ -22,6 +23,21 @@
                         <a style="color:red;"  href="#" selectcount="${param.index}" class="addInput" onclick="deleteField(this)">x</a></div>
                     </#if>
                 </#list>
+            </div>
+            <div class="checkbox-container">
+                <div class="checkbox-container-inner">
+                    <input type="checkbox" name="statuses" value="New" ${selectedStatuses?seq_contains("New")?string("checked", "")} />New<br/>
+                    <input type="checkbox" name="statuses" value="Completed" ${selectedStatuses?seq_contains("Completed")?string("checked", "")} />Completed<br/>
+                    <input type="checkbox" name="statuses" value="Canceled" ${selectedStatuses?seq_contains("Canceled")?string("checked", "")} />Canceled<br/>
+                    <input type="checkbox" name="statuses" value="Verified" ${selectedStatuses?seq_contains("Verified")?string("checked", "")}  />Verified<br/>
+                    <input type="checkbox" name="statuses" value="In progress" ${selectedStatuses?seq_contains("In progress")?string("checked", "")} />In progress<br/>
+                </div>
+                <div class="checkbox-container-inner">
+                    <input type="checkbox" name="statuses" value="Postponed" ${selectedStatuses?seq_contains("Postponed")?string("checked", "")} />Postponed<br/>
+                    <input type="checkbox" name="statuses" value="Resumed" ${selectedStatuses?seq_contains("Resumed")?string("checked", "")} />Resumed<br/>
+                    <input type="checkbox" name="statuses" value="Reconciliation" ${selectedStatuses?seq_contains("Reconciliation")?string("checked", "")} />Reconciliation<br/>
+                    <input type="checkbox" name="statuses" value="Blocked" ${selectedStatuses?seq_contains("Blocked")?string("checked", "")} />Blocked<br/>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary mt-1">Найти</button>
         </form>

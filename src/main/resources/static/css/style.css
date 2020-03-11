@@ -170,7 +170,14 @@ background-color: #0050b2;
 .selected-params-input {
     width: 300px !important;
 }
-
+.checkbox-container {
+    width: 300px;
+    display: flex;
+}
+.checkbox-container-inner {
+    width: 50%;
+    display: block;
+}
 /*------------------------------------Tree view---------------------------------------------------*/
 /* Remove default bullets */
 ul, #myUL {

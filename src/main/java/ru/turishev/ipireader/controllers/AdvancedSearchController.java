@@ -15,6 +15,7 @@ import ru.turishev.ipireader.services.SearchService;
 import ru.turishev.ipireader.utils.SearchParameter;
 import ru.turishev.ipireader.utils.Utils;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -30,6 +31,7 @@ public class AdvancedSearchController {
 								  @RequestParam(name = "responsible",required = false) String responsible,
 								  @RequestParam(name = "datecreatedd",required = false) String datecreatedd,
 								  @RequestParam(name = "datecreatedu",required = false) String datecreatedu,
+								  @RequestParam(name = "statuses",required = false, defaultValue = "") String[] statuses,
 								  @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
 								  Model model) {
 		SearchForm searchForm = SearchForm
@@ -43,12 +45,16 @@ public class AdvancedSearchController {
 					.datecreatedu(datecreatedu)
 				.build();
 		Page<TasksDto> tasks = null;
+		List<String> selectedStatuses = Arrays.asList(statuses);
 		if(author!=null||theme!=null||description!=null||comment!=null||responsible!=null||datecreatedd!=null||datecreatedu!=null) {
-			tasks = searchService.getTasksBySearchParameters(searchForm.toList(),pageable);	
+			tasks = searchService.getTasksBySearchParameters(searchForm.toList(),selectedStatuses,pageable);
 		}
 		List<SearchParameter> selectedParams = searchForm.toList();
-		String url = "/search"+Utils.getUrlbySearchForm(searchForm);
+		String url = "/search"+Utils.getUrlbySearchForm(searchForm, selectedStatuses);
 		model.addAttribute("selectedParams", selectedParams);
+		if(statuses!=null){
+			model.addAttribute("selectedStatuses", selectedStatuses);
+		}
 		if(tasks!=null&&tasks.getTotalPages()!=0){
 			model.addAttribute("page", tasks);
 		}

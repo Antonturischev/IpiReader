@@ -56,7 +56,8 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
                         "left join tasks_comment tc on tc.task_id = t.id "+
                         "left join markup_markup mm on tc.content_id = mm.id "+
 						"left join user_user ur on t.responsible_id = ur.id " +
-						"left join user_group ug on t.responsible_group_id = ug.codename "+
+						"left join user_group ug on t.responsible_group_id = ug.codename " +
+						"left join common_status cs on t.status_id = cs.id "+
                    "where " +
                         "COALESCE(UPPER(u.fullname),'') like %?1% " +
                         "and COALESCE(UPPER(t.subject),'') like %?2% " +
@@ -64,14 +65,16 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
                         "and COALESCE(UPPER(mm.text),'') like %?4% " +
 						"and (COALESCE(UPPER(ur.fullname),'') like %?5% " +
 						"or COALESCE(UPPER(ug.name),'') like %?5%) " +
-						"and COALESCE(t.date_added,'1990-01-01 00:00:00')>?6 and COALESCE(t.date_added, '2030-01-01 00:00:00')<?7)",
+						"and COALESCE(t.date_added,'1990-01-01 00:00:00')>?6 and COALESCE(t.date_added, '2030-01-01 00:00:00')<?7 " +
+						"and cs.name in ?8 )",
           countQuery = "select count(distinct(t.id)) from tasks_task t " +
                         "left join user_user u on t.created_by_id=u.id " +
                         "left join markup_markup m on t.description_id = m.id " +
                         "left join tasks_comment tc on tc.task_id = t.id "+
                         "left join markup_markup mm on tc.content_id = mm.id "+
 					    "left join user_user ur on t.responsible_id = ur.id "+
-						"left join user_group ug on t.responsible_group_id = ug.codename "+
+						"left join user_group ug on t.responsible_group_id = ug.codename " +
+				  		"left join common_status cs on t.status_id = cs.id "+
                    "where " +
                         "COALESCE(UPPER(u.fullname),'') like %?1% " +
                         "and COALESCE(UPPER(t.subject),'') like %?2% " +
@@ -79,9 +82,10 @@ public interface TasksRepository extends JpaRepository<Task,Long> {
                         "and COALESCE(UPPER(mm.text),'') like %?4%  " +
 				  		"and (COALESCE(UPPER(ur.fullname),'') like %?5% " +
 				  		"or COALESCE(UPPER(ug.name),'') like %?5%)" +
-				  		"and COALESCE(t.date_added,'1990-01-01 00:00:00')>?6 and COALESCE(t.date_added, '2030-01-01 00:00:00')<?7",
+				  		"and COALESCE(t.date_added,'1990-01-01 00:00:00')>?6 and COALESCE(t.date_added, '2030-01-01 00:00:00')<?7 " +
+				  		"and cs.name in ?8 ",
           nativeQuery = true)
-    Page<Task> findTasksByVarParam(String author, String subject, String description, String comment, String responsible, Timestamp datecreatedd, Timestamp datecreatedu, Pageable pageable);
+    Page<Task> findTasksByVarParam(String author, String subject, String description, String comment, String responsible, Timestamp datecreatedd, Timestamp datecreatedu, List<String> statuses, Pageable pageable);
 
     @Query("from Task  t where t.divisionsTopic in (:topicList)")
     Page<Task> findByTopic(@Param("topicList") List<DivisionsTopic> topicList, Pageable pageable);
