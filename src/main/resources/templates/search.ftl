@@ -25,6 +25,7 @@
                 </#list>
             </div>
             <div class="checkbox-container">
+                <p style="margin-right:5px;">Статус: </p>
                 <div class="checkbox-container-inner">
                     <input type="checkbox" name="statuses" value="New" ${selectedStatuses?seq_contains("New")?string("checked", "")} />New<br/>
                     <input type="checkbox" name="statuses" value="Completed" ${selectedStatuses?seq_contains("Completed")?string("checked", "")} />Completed<br/>
