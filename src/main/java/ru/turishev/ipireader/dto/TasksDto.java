@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import ru.turishev.ipireader.model.Attachment;
 import ru.turishev.ipireader.model.DivisionsTopic;
 import ru.turishev.ipireader.model.Project;
@@ -16,6 +18,8 @@ import ru.turishev.ipireader.utils.Utils;
 @Builder
 @Data
 public class TasksDto {
+	//private static final String path="file://kiosk/test/";
+	private static final String path="file://3852-dt-0190/ipi-manager/attachments/";
 	private Task task;
 	private Long id;
 	private String subject;
@@ -38,6 +42,7 @@ public class TasksDto {
 	private List<String> usersFromTopic;
 	private List<String> groupFromTopic;
 	private List<Attachment> attachments;
+	private String attachmentsPath;
 
 	public static TasksDto from(Optional<Task> taskOptional) {
 		if(taskOptional.isPresent()) {
@@ -71,6 +76,8 @@ public class TasksDto {
 								if (x.getGroup()!=null&&(x.is_manager()||x.is_spectator())) return x.getGroup().getName();
 								else return null;
 								}).filter(x->x!=null).collect(Collectors.toList()))
+					.attachments(task.getAttachments())
+					.attachmentsPath(TasksDto.getPathByNumber(task.getId()))
 					.build();
 		}
 	return null;		
@@ -105,6 +112,18 @@ public class TasksDto {
 								if (x.getGroup()!=null&&(x.is_manager()||x.is_spectator())) return x.getGroup().getName();
 								else return null;
 								}).filter(x->x!=null).collect(Collectors.toList()))
+					.attachments(task.getAttachments())
+					.attachmentsPath(TasksDto.getPathByNumber(task.getId()))
 					.build();	
 		}
+
+	private static String getPathByNumber(Long id) {
+		if(id<=10000) return path+"1-10000/"+String.valueOf(id)+"/";
+		if(id<=20000) return path+"10001-20000/"+String.valueOf(id)+"/";
+		if(id<=30000) return path+"20001-30000/"+String.valueOf(id)+"/";
+		if(id<=40000) return path+"30001-40000/"+String.valueOf(id)+"/";
+		if(id<=50000) return path+"40001-50000/"+String.valueOf(id)+"/";
+		if(id<=60000) return path+"50001-60000/"+String.valueOf(id)+"/";
+		else return "";
+	}
 }

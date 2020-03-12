@@ -23,7 +23,11 @@
     	</#if>         
         <p><b>Тема:</b> ${task.getSubject()}</p>
         <p><b>Описание:</b> <#if task.getDescription()?exists>${task.getDescription()}</#if></p>
-
+        <#if task.getAttachments()?has_content>
+            <#list task.getAttachments() as attach>
+        		<a href="${task.getAttachmentsPath()}${attach.getFilename()}" download>${attach.getFilename()}&nbsp;</a>
+        	</#list>
+        </#if>
         <span class="delimiter"></span>
         <#if task.getComments()?has_content>
 			<#list task.getComments() as comment>
@@ -90,12 +94,6 @@
 	    	</#if>
     	</div>          
     </div>
-
-
-
-   
-
-
     <#else>
 	    <div class="alert alert-danger" role="alert">
 	  		<span>Задача не найдена</span>
