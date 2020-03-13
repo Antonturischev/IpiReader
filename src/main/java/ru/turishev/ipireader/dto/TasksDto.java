@@ -18,8 +18,7 @@ import ru.turishev.ipireader.utils.Utils;
 @Builder
 @Data
 public class TasksDto {
-	//private static final String path="file://kiosk/test/";
-	private static final String path="file://3852-dt-0190/ipi-manager/attachments/";
+	private static final String path="file://ipi-manager/";
 	private Task task;
 	private Long id;
 	private String subject;
