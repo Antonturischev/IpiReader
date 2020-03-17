@@ -115,7 +115,7 @@ public class TasksDto {
 		}
 
 	private static String getPathByNumber(Long id) {
-		Long pathPart = (id%10000!=0)?(long)Math.floor(id/10000):(long)Math.floor(id/10000-1);
+		Integer pathPart = (id%10000!=0)?(int)Math.floor(id/10000):(int)Math.floor(id/10000-1);
 		if(pathPart<1) {
 			return path+"1-10000/"+String.valueOf(id)+"/";
 		}

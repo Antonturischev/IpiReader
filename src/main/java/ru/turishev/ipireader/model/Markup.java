@@ -18,4 +18,7 @@ public class Markup {
 
     @Column(name = "html")
     private String text;
+
+    @Column(name = "metadata")
+    private String metadata;
 }

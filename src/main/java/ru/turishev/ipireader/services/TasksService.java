@@ -6,15 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.model.*;
-import ru.turishev.ipireader.repositories.TasksRepository;
-import ru.turishev.ipireader.repositories.UsersRepository;
+import ru.turishev.ipireader.repositories.*;
+import ru.turishev.ipireader.security.UserDetailsImpl;
 import ru.turishev.ipireader.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.StringJoiner;
+import java.sql.Timestamp;
+import java.util.*;
 
 
 @Service
@@ -24,6 +21,13 @@ public class TasksService {
 	private TasksRepository tasksRepository;
 	@Autowired
 	private UsersRepository usersRepository;
+	@Autowired
+	private StatusRepository statusRepository;
+	@Autowired
+	private CommentRepository commentRepository;
+	@Autowired
+	private MarkupRepository markupRepository;
+
 
 	public TasksDto getById(Long id) {
 		return TasksDto.from(tasksRepository.findById(id));
@@ -85,6 +89,30 @@ public class TasksService {
 		Page<Task> tasks = tasksRepository.findAllByProject(id, pageable);
 		Page<TasksDto> tasksDto = tasks.map(Utils::convertToTasksDto);
 		return tasksDto;
+	}
+
+	public void saveTask(Long taskid, Long statusid, String comment, UserDetailsImpl currentUser) {
+		Optional<Task> taskFromRepo = tasksRepository.findById(taskid);
+		if(taskFromRepo.isPresent()) {
+			Task task = taskFromRepo.get();
+			Optional<CommonStatus> statusFromRepo = statusRepository.findById(statusid);
+			if(statusFromRepo.isPresent()) {
+				task.setStatus(statusFromRepo.get());
+			}
+			if(!comment.equals(" ")) {
+
+				List<Comment> comments = task.getComments();
+				comments.add(Comment.builder()
+											.author(currentUser.getUser())
+											.task(task)
+											.dateAdded(new Timestamp(System.currentTimeMillis()))
+											.content(Markup.builder().text(comment).metadata("").build())
+						.build());
+			task.setComments(comments);
+			}
+
+			tasksRepository.save(task);
+		}
 	}
 }
 

@@ -25,7 +25,11 @@ public class Comment {
     @Column(name = "date_added")
     private Timestamp dateAdded;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Task task;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "content_id")
     private Markup content;
 }

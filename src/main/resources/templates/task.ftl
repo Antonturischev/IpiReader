@@ -37,15 +37,33 @@
 				</blockquote>
 	    	</#list>    	
     	</#if>
+    	<div>
+            <form id="TaskForm" method="POST">
+    	        <textarea name = "comment"> </textarea> <br/>
+    	        <input type = "submit" value = "Сохранить"/>
+    	    </form>
+    	</div>
     </div>
     <div class="col-sm-4">
     	<p><b>Автор:</b> ${task.getAuthor()}</p>
-    		<#if task.getStatus()="Completed"><p><b>Статус:</b> <span  class="badge badge-pill badge-success">${task.getStatus()}</span></p>
-	        <#else>
-	            <#if task.getStatus()="Canceled"><p><b>Статус:</b> <span class="badge badge-pill badge-danger">${task.getStatus()}</span></p>
-	            <#else><p><b>Статус:</b> <span class="badge badge-pill badge-primary">${task.getStatus()}</span></p>
-	            </#if>
-	        </#if>
+    	<#if task.getStatus()="Completed"><p><b>Статус:</b> <span  class="badge badge-pill badge-success">${task.getStatus()}</span></p>
+	    <#else>
+	       <#if task.getStatus()="Canceled"><p><b>Статус:</b> <span class="badge badge-pill badge-danger">${task.getStatus()}</span></p>
+	       <#else><p><b>Статус:</b> <span class="badge badge-pill badge-primary">${task.getStatus()}</span></p>
+	       </#if>
+	    </#if>
+<!--Статус-------------------------------------------------------------------------------------------------------------------------------------------->
+        <select name = "statusid" form = "TaskForm">
+            <option value="7" <#if task.getStatus()="Completed">selected</#if>>Выполнена</option>
+            <option value="5" <#if task.getStatus()="Canceled">selected</#if>>Отклонена</option>
+            <option value="1" <#if task.getStatus()="New">selected</#if>>Новая</option>
+            <option value="9" <#if task.getStatus()="Blocked">selected</#if>>Блокирована</option>
+            <option value="3" <#if task.getStatus()="In progress">selected</#if>>На выполнении</option>
+            <option value="4" <#if task.getStatus()="Postponed">selected</#if>>Отложена</option>
+            <option value="6" <#if task.getStatus()="Resumed">selected</#if>>Возобновлена</option>
+            <option value="8" <#if task.getStatus()="Reconciliation">selected</#if>>На согласовании</option>
+            <option value="2" <#if task.getStatus()="Verified">selected</#if>>На проверке</option>
+        </select>
         <#if task.getDateAdded()??>
         	<p><b>Дата создания:</b> ${task.getDateAdded()}</p>
         </#if>

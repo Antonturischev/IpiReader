@@ -77,8 +77,7 @@ public class Task {
     @JoinColumn(name = "description_id")
     private Markup description;
 
-    @OneToMany
-    @JoinColumn(name = "task_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     @OrderBy("id asc")
     private List<Comment> comments;
 
