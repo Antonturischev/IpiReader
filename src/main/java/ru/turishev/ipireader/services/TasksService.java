@@ -163,11 +163,11 @@ public class TasksService {
 		.build();
 		task=tasksRepository.save(task);
 		if(files!=null){
-			for(MultipartFile mpf:files) {
-				if(mpf!=null&&!mpf.getOriginalFilename().isEmpty()){
+			for(MultipartFile file:files) {
+				if(file!=null&&!file.getOriginalFilename().isEmpty()){
 					try {
-						fileUtils.saveFile(task.getId(), mpf);
-						Attachment ath = Attachment.builder().task(task).dateAdded(time).filename(mpf.getOriginalFilename()).original_filename(mpf.getOriginalFilename()).author(user).build();
+						fileUtils.saveFile(task.getId(), file);
+						Attachment ath = Attachment.builder().task(task).dateAdded(time).filename(file.getOriginalFilename()).original_filename(file.getOriginalFilename()).author(user).build();
 						attachmentRepository.save(ath);
 					} catch (IOException e) {
 						e.printStackTrace();

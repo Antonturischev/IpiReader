@@ -7,6 +7,7 @@ import ru.turishev.ipireader.model.DivisionsTopic;
 import ru.turishev.ipireader.model.Project;
 import ru.turishev.ipireader.model.Task;
 import ru.turishev.ipireader.services.DivisionsTopicService;
+import ru.turishev.ipireader.utils.FileUtils;
 import ru.turishev.ipireader.utils.Utils;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.stream.Collectors;
 @Builder
 @Data
 public class TasksDto {
-	private static final String path="http://ipi-manager3/";
 	private Task task;
 	private Long id;
 	private String subject;
@@ -74,7 +74,7 @@ public class TasksDto {
 								else return null;
 								}).filter(x->x!=null).collect(Collectors.toList()))
 					.attachments(task.getAttachments())
-					.attachmentsPath(TasksDto.getPathByNumber(task.getId()))
+					.attachmentsPath(FileUtils.getDownloadPathByNumber(task.getId()))
 					.build();
 		}
 	return null;		
@@ -110,17 +110,9 @@ public class TasksDto {
 								else return null;
 								}).filter(x->x!=null).collect(Collectors.toList()))
 					.attachments(task.getAttachments())
-					.attachmentsPath(TasksDto.getPathByNumber(task.getId()))
+					.attachmentsPath(FileUtils.getDownloadPathByNumber(task.getId()))
 					.build();	
 		}
 
-	private static String getPathByNumber(Long id) {
-		Integer pathPart = (id%10000!=0)?(int)Math.floor(id/10000):(int)Math.floor(id/10000-1);
-		if(pathPart<1) {
-			return path+"1-10000/"+String.valueOf(id)+"/";
-		}
-		else {
-			return path + pathPart.toString() + "0001-" + (++pathPart).toString() + "0000/" + String.valueOf(id) + "/";
-		}
-	}
+
 }
