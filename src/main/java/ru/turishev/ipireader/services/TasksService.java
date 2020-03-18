@@ -5,14 +5,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.model.*;
 import ru.turishev.ipireader.repositories.*;
 import ru.turishev.ipireader.security.UserDetailsImpl;
+import ru.turishev.ipireader.utils.FileUtils;
 import ru.turishev.ipireader.utils.Utils;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -32,6 +36,10 @@ public class TasksService {
 	private DivisionsTopicRepository divisionsTopicRepository;
 	@Autowired
 	private CommonPriorityRepository commonPriorityRepository;
+	@Autowired
+	private AttachmentRepository attachmentRepository;
+	@Autowired
+	private FileUtils fileUtils;
 
 
 	public TasksDto getById(Long id) {
@@ -127,17 +135,19 @@ public class TasksService {
 		}
 	}
 
-	public Long createTask(Long topicid, String subject, String description, User user) {
+	public Long createTask(Long topicid, String subject, String description, List<MultipartFile> files, User user) {
+		if(subject.equals("")) return -1L;
 		DivisionsTopic topic = divisionsTopicRepository.findById(topicid).orElseThrow(IllegalArgumentException::new);
 		CommonPriority priority = commonPriorityRepository.findById(4L).orElseThrow(IllegalArgumentException::new);
 		CommonStatus status = statusRepository.findById(1L).orElseThrow(IllegalArgumentException::new);
+		Timestamp time = new Timestamp(System.currentTimeMillis());
 		Task task = Task.builder()
 				.subject(subject)
 				.description(Markup.builder().text(description).metadata("").build())
 				.createdBy(user)
 				.author(user)
-				.dateAdded(new Timestamp(System.currentTimeMillis()))
-				.dateChanged(new Timestamp(System.currentTimeMillis()))
+				.dateAdded(time)
+				.dateChanged(time)
 				.divisionsTopic(topic)
 				.duration(0L)
 				.brokenReactionLevel(0L)
@@ -148,10 +158,23 @@ public class TasksService {
 				.markedExpired(false)
 				.priority(priority)
 				.status(status)
+			//	.attachments(files.stream().map((x)->Attachment.builder().filename(x.getOriginalFilename()).author(user).dateAdded(time).build()).collect(Collectors.toList()))
 				.responsibleGroup(topic.getResponsibleGroup())
 		.build();
-
 		task=tasksRepository.save(task);
+		if(files!=null){
+			for(MultipartFile mpf:files) {
+				if(mpf!=null&&!mpf.getOriginalFilename().isEmpty()){
+					try {
+						fileUtils.saveFile(task.getId(), mpf);
+						Attachment ath = Attachment.builder().task(task).dateAdded(time).filename(mpf.getOriginalFilename()).original_filename(mpf.getOriginalFilename()).author(user).build();
+						attachmentRepository.save(ath);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 		return task.getId();
 		/*Добавить тут оповещение по email*/
 	}

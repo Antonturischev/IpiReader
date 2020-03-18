@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import ru.turishev.ipireader.security.UserDetailsImpl;
 import ru.turishev.ipireader.services.DivisionsTopicService;
 import ru.turishev.ipireader.services.TasksService;
+
+import java.util.Arrays;
 
 @Controller
 public class CreateTaskController {
@@ -35,8 +38,10 @@ public class CreateTaskController {
     public String getCreateTaskPage(@PathVariable Long topicid,
                                     @RequestParam String subject,
                                     @RequestParam String description,
+                                    @RequestParam MultipartFile[] file,
                                     @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
-        Long id = tasksService.createTask(topicid, subject, description, userDetailsImpl.getUser());
+        Long id = tasksService.createTask(topicid, subject, description, Arrays.asList(file), userDetailsImpl.getUser());
+        if(id==-1) return "redirect:/createtask/"+topicid;
         return "redirect:/task/"+id;
     }
 }

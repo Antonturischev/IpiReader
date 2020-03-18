@@ -93,8 +93,7 @@ public class Task {
     @JoinTable(name = "tasks_task_spectator_groups", joinColumns = {@JoinColumn(name = "task_id")}, inverseJoinColumns = {@JoinColumn(name = "group_id")})
     private List<Group> spectratorsGroup;
         
-    @OneToMany
-    @JoinColumn(name = "task_id")
+    @OneToMany(mappedBy = "task")
     private List<Attachment> attachments;
 
     @Column(name = "duration")

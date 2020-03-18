@@ -1,8 +1,8 @@
 package ru.turishev.ipireader.model;
 
 import lombok.*;
-
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -23,4 +23,13 @@ public class Attachment {
     @Column(name = "filename")
     private String filename;
 
+    @Column(name = "original_filename")
+    private String original_filename;
+
+    @Column(name = "date_added")
+    private Timestamp dateAdded;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "task_id")
+    private Task task;
 }

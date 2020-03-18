@@ -49,3 +49,16 @@ function deleteField(a) {
 	contDiv.parentNode.removeChild(contDiv);
 	return false;
 }
+
+function addFileInput() {
+	var div = document.createElement("div");
+	div.innerHTML = '<a style="color:red;" href="#" class="addInput" onclick="deleteFileInput(this)">x</a><input class="input upload-file-input" type="file" name="file"/>'
+	document.getElementById("parentFileContainerId").appendChild(div);
+	return false;
+}
+
+function deleteFileInput(a) {
+    var contDiv = a.parentNode;
+    contDiv.parentNode.removeChild(contDiv);
+    return false;
+}

@@ -5,9 +5,11 @@
     <div class="container mt-5 c-container">
     <#if topicid?exists>
     <div class="col-sm-8">
-		<form method = "POST">
-            <input name = "subject" placeholder="Тема заявки"></input></br>
+		<form method = "POST" enctype="multipart/form-data">
+            <input name = "subject" placeholder="Тема заявки" required></input></br>
             <textarea name = "description"  placeholder="Описание заявки"></textarea></br>
+            <a onclick="addFileInput()" href="#">Добавить вложение</a>
+            <div id="parentFileContainerId"></div>
 			<input type = "submit" value = "Создать заявку"/>
 		</form>
     </div>
