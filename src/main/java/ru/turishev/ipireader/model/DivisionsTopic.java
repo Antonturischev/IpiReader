@@ -29,6 +29,10 @@ public class DivisionsTopic {
     @JoinColumn(name = "responsible_id")
     private User responsibleUser;
 
+    @ManyToOne
+    @JoinColumn(name = "responsible_group_id")
+    private Group responsibleGroup;
+
     @Column(name = "mptt_level")
     private Integer mpttLevel;
 

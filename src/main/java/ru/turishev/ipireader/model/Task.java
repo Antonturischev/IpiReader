@@ -49,6 +49,10 @@ public class Task {
     private User createdBy;
 
     @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    @ManyToOne
     @JoinColumn(name = "responsible_id")
     private User responsible;
 
@@ -73,7 +77,7 @@ public class Task {
     @Column(name = "date_closed")
     private Timestamp dateClosed;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "description_id")
     private Markup description;
 
@@ -92,4 +96,25 @@ public class Task {
     @OneToMany
     @JoinColumn(name = "task_id")
     private List<Attachment> attachments;
+
+    @Column(name = "duration")
+    private Long duration;
+
+    @Column(name = "broken_reaction_level")
+    private Long brokenReactionLevel;
+
+    @Column(name = "severity_id")
+    private Long severity;
+
+    @Column(name = "marked_as_expired")
+    private boolean markedExpired;
+
+    @Column(name = "close_if_all_child_tasks_are_closed")
+    private boolean closeIfAllChildClosed;
+
+    @Column(name = "anonymous_reporter")
+    private String anonymousReporter;
+
+    @Column(name = "status_change_reason")
+    private String statusChangeReason;
 }

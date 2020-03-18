@@ -3,6 +3,7 @@ package ru.turishev.ipireader.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.model.*;
@@ -27,6 +28,10 @@ public class TasksService {
 	private CommentRepository commentRepository;
 	@Autowired
 	private MarkupRepository markupRepository;
+	@Autowired
+	private DivisionsTopicRepository divisionsTopicRepository;
+	@Autowired
+	private CommonPriorityRepository commonPriorityRepository;
 
 
 	public TasksDto getById(Long id) {
@@ -98,6 +103,12 @@ public class TasksService {
 			Optional<CommonStatus> statusFromRepo = statusRepository.findById(statusid);
 			if(statusFromRepo.isPresent()) {
 				task.setStatus(statusFromRepo.get());
+				if (statusFromRepo.get().getId()==7||statusFromRepo.get().getId()==5) {
+					task.setResponsible(currentUser.getUser());
+					task.setResponsibleGroup(null);
+					task.setDateChanged(new Timestamp(System.currentTimeMillis()));
+					task.setDateClosed(new Timestamp(System.currentTimeMillis()));
+				}
 			}
 			if(!comment.equals(" ")) {
 
@@ -109,10 +120,40 @@ public class TasksService {
 											.content(Markup.builder().text(comment).metadata("").build())
 						.build());
 			task.setComments(comments);
+			task.setDateChanged(new Timestamp(System.currentTimeMillis()));
 			}
-
 			tasksRepository.save(task);
+			/*Добавить тут оповещение по email*/
 		}
+	}
+
+	public Long createTask(Long topicid, String subject, String description, User user) {
+		DivisionsTopic topic = divisionsTopicRepository.findById(topicid).orElseThrow(IllegalArgumentException::new);
+		CommonPriority priority = commonPriorityRepository.findById(4L).orElseThrow(IllegalArgumentException::new);
+		CommonStatus status = statusRepository.findById(1L).orElseThrow(IllegalArgumentException::new);
+		Task task = Task.builder()
+				.subject(subject)
+				.description(Markup.builder().text(description).metadata("").build())
+				.createdBy(user)
+				.author(user)
+				.dateAdded(new Timestamp(System.currentTimeMillis()))
+				.dateChanged(new Timestamp(System.currentTimeMillis()))
+				.divisionsTopic(topic)
+				.duration(0L)
+				.brokenReactionLevel(0L)
+				.severity(4L)
+				.anonymousReporter("")
+				.statusChangeReason("")
+				.closeIfAllChildClosed(false)
+				.markedExpired(false)
+				.priority(priority)
+				.status(status)
+				.responsibleGroup(topic.getResponsibleGroup())
+		.build();
+
+		task=tasksRepository.save(task);
+		return task.getId();
+		/*Добавить тут оповещение по email*/
 	}
 }
 

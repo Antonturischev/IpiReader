@@ -23,6 +23,9 @@
 		            <li class="nav-item">
 		                <a class="nav-link" href="/search">Расширенный поиск</a>
 		            </li>
+					<li class="nav-item">
+						<a class="nav-link" href="/сreatetask">Добавить задачу</a>
+					</li>
 		        </ul>
 		        <form class="form-inline my-3 my-lg-0" method="POST" action="/task">
 		            <input name="id" class="form-control mr-sm-2" type="search" placeholder="Найти по номеру" aria-label="Search">
