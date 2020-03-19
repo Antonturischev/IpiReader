@@ -1,9 +1,7 @@
 package ru.turishev.ipireader.model;
 
 import lombok.*;
-
 import javax.persistence.*;
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -25,6 +23,9 @@ public class User {
 
     @Column(name = "fullname")
     private String fullName;
+
+    @Column(name = "email")
+    private String email;
 
     @OneToMany(mappedBy = "higherUser", fetch = FetchType.LAZY)
     private List<User> underUsers;

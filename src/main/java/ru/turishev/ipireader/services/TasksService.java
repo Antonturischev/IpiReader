@@ -3,7 +3,6 @@ package ru.turishev.ipireader.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.turishev.ipireader.dto.TasksDto;
@@ -12,7 +11,6 @@ import ru.turishev.ipireader.repositories.*;
 import ru.turishev.ipireader.security.UserDetailsImpl;
 import ru.turishev.ipireader.utils.FileUtils;
 import ru.turishev.ipireader.utils.Utils;
-
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.*;
@@ -29,10 +27,6 @@ public class TasksService {
 	@Autowired
 	private StatusRepository statusRepository;
 	@Autowired
-	private CommentRepository commentRepository;
-	@Autowired
-	private MarkupRepository markupRepository;
-	@Autowired
 	private DivisionsTopicRepository divisionsTopicRepository;
 	@Autowired
 	private CommonPriorityRepository commonPriorityRepository;
@@ -40,6 +34,8 @@ public class TasksService {
 	private AttachmentRepository attachmentRepository;
 	@Autowired
 	private FileUtils fileUtils;
+	@Autowired
+	private MailSender mailSender;
 
 
 	public TasksDto getById(Long id) {
@@ -104,6 +100,22 @@ public class TasksService {
 		return tasksDto;
 	}
 
+	public Set<User> getAllTaskSpectators(Task task) {
+		Set<User> spectators = new HashSet<>();
+		spectators.add(task.getAuthor()); //автор
+		spectators.add(task.getResponsible()); //ответственный
+		spectators.addAll(task.getSpectrators()); //наблюдатели из заявки
+		task.getSpectratorsGroup().forEach(group->spectators.addAll(group.getUsers())); //группы наблюдателей из заявки
+		spectators.addAll(task.getResponsibleGroup().getUsers()); //ответственная группа
+		spectators.addAll(task.getDivisionsTopic().getTopicAccessGrant().stream().map(
+				x->{
+					if (x.getUser()!=null&&(x.is_manager()||x.is_spectator())) return x.getUser();
+					else return null;
+				}).filter(x->x!=null).collect(Collectors.toList()));
+
+		return spectators;
+	}
+
 	public void saveTask(Long taskid, Long statusid, String comment, UserDetailsImpl currentUser, List<MultipartFile> files) {
         Timestamp time = new Timestamp(System.currentTimeMillis());
         User user = currentUser.getUser();
@@ -147,6 +159,7 @@ public class TasksService {
                 }
             }
 			/*Добавить тут оповещение по email*/
+			mailSender.send(getAllTaskSpectators(task),"Тест","Заявка изменена");
 		}
 	}
 
