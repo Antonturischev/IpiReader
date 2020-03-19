@@ -8,9 +8,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.turishev.ipireader.dto.TasksDto;
 import ru.turishev.ipireader.security.UserDetailsImpl;
 import ru.turishev.ipireader.services.TasksService;
+
+import java.util.Arrays;
 
 @Controller
 public class TaskController {
@@ -33,8 +36,9 @@ public class TaskController {
 	public String saveTask(@PathVariable Long id,
 						   @RequestParam Long statusid,
 						   @RequestParam String comment,
+						   @RequestParam MultipartFile[] file,
 						   @AuthenticationPrincipal UserDetailsImpl currentUser) {
-		tasksService.saveTask(id, statusid, comment, currentUser);
+		tasksService.saveTask(id, statusid, comment, currentUser, Arrays.asList(file));
 		return "redirect:/task/"+id;
 	}
 }

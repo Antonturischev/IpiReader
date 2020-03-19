@@ -39,8 +39,8 @@ public class CreateTaskController {
                                     @RequestParam String subject,
                                     @RequestParam String description,
                                     @RequestParam MultipartFile[] file,
-                                    @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
-        Long id = tasksService.createTask(topicid, subject, description, Arrays.asList(file), userDetailsImpl.getUser());
+                                    @AuthenticationPrincipal UserDetailsImpl currentUser) {
+        Long id = tasksService.createTask(topicid, subject, description, Arrays.asList(file), currentUser);
         if(id==-1) return "redirect:/createtask/"+topicid;
         return "redirect:/task/"+id;
     }

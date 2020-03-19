@@ -18,7 +18,14 @@
 .input-group-pager {
     width: 280px;
 }
+.md-5 {
+    margin-bottom: 5px;
+}
 
+.task-buttons-container {
+    display:flex;
+    justify-content:space-between;
+}
 /*------------------------------------navbar---------------------------------------------------*/
 .c-navbar-container {
 background-color: #0050b2;
@@ -162,7 +169,9 @@ background-color: #0050b2;
 .c-page-link:hover{
     text-decoration: none;
 }
-
+.c-text-area {
+    min-height:150px;
+}
 /*------------------------------------Search---------------------------------------------------*/
 .search-select {
     width: 300px !important;

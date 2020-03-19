@@ -38,27 +38,32 @@
 	    	</#list>    	
     	</#if>
     	<div>
-            <form id="TaskForm" method="POST">
-    	        <textarea name = "comment"> </textarea> <br/>
-    	        <input type = "submit" value = "Сохранить"/>
+            <form id="TaskForm" enctype="multipart/form-data" method="POST">
+    	        <textarea class="form-control c-text-area" name = "comment" placeholder="Добавьте свой комментарий"> </textarea> <br/>
+				<div class="task-buttons-container">
+					<div style="width:104px">
+						<input class="btn btn-primary" type = "submit" value = "Сохранить"/>
+					</div>
+					<div style="width:120px">
+							<a  style="float:right" class="btn btn-info md-5" onclick="addFileInput()" href="#">Добавить вложение</a>
+					</div>
+				</div>
+				<div style = "width:100%">
+					<div id="parentFileContainerId"></div>
+				</div>
     	    </form>
     	</div>
     </div>
     <div class="col-sm-4">
     	<p><b>Автор:</b> ${task.getAuthor()}</p>
-    	<#if task.getStatus()="Completed"><p><b>Статус:</b> <span  class="badge badge-pill badge-success">${task.getStatus()}</span></p>
-	    <#else>
-	       <#if task.getStatus()="Canceled"><p><b>Статус:</b> <span class="badge badge-pill badge-danger">${task.getStatus()}</span></p>
-	       <#else><p><b>Статус:</b> <span class="badge badge-pill badge-primary">${task.getStatus()}</span></p>
-	       </#if>
-	    </#if>
 <!--Статус-------------------------------------------------------------------------------------------------------------------------------------------->
-        <select name = "statusid" form = "TaskForm">
+    	<p><b>Статус:</b>
+        <select name = "statusid" form = "TaskForm" class="badge badge-pill">
             <option value="7" <#if task.getStatus()="Completed">selected</#if>>Выполнена</option>
             <option value="5" <#if task.getStatus()="Canceled">selected</#if>>Отклонена</option>
             <option value="1" <#if task.getStatus()="New">selected</#if>>Новая</option>
             <option value="9" <#if task.getStatus()="Blocked">selected</#if>>Блокирована</option>
-            <option value="3" <#if task.getStatus()="In progress">selected</#if>>На выполнении</option>
+            <option value="3" <#if task.getStatus()="In progress">selected</#if>>На исполнении</option>
             <option value="4" <#if task.getStatus()="Postponed">selected</#if>>Отложена</option>
             <option value="6" <#if task.getStatus()="Resumed">selected</#if>>Возобновлена</option>
             <option value="8" <#if task.getStatus()="Reconciliation">selected</#if>>На согласовании</option>

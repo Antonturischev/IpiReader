@@ -52,7 +52,9 @@ function deleteField(a) {
 
 function addFileInput() {
 	var div = document.createElement("div");
-	div.innerHTML = '<a style="color:red;" href="#" class="addInput" onclick="deleteFileInput(this)">x</a><input class="input upload-file-input" type="file" name="file"/>'
+	document.getElementById("parentFileContainerId").style.width='330px';
+	document.getElementById("parentFileContainerId").style.float='right';
+	div.innerHTML = '<a style="color:red;" href="#" class="addInput" onclick="deleteFileInput(this)">x</a><input class="input upload-file-input  btn" type="file" name="file"/>'
 	document.getElementById("parentFileContainerId").appendChild(div);
 	return false;
 }
