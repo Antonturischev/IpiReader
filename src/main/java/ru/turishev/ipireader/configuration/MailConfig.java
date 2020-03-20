@@ -36,10 +36,3 @@ public class MailConfig {
         return mailSender;
     }
 }
-//app.prop
-// spring.mail.host=smtp.yandex.ru
-//        spring.mail.username=AntonTurischev@yandex.ru
-//spring.mail.password=b&St_911
-//        spring.mail.port=465
-//        spring.mail.protocol=smtps
-//        mail.debug=true
