@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "user_user")
 @ToString(exclude = {"higherUser","underUsers","groups","respTopics","createdTasks","responsTasks",
-            "spectTasks"})
+            "spectTasks", "email", "dateRemoved"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class User {
     @OneToMany(mappedBy = "higherUser", fetch = FetchType.LAZY)
     private List<User> underUsers;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "higherUser_id")
     private User higherUser;
 

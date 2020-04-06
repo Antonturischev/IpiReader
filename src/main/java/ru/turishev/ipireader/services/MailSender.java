@@ -25,7 +25,7 @@ public class MailSender {
         for(User user:mailToUsers) {
             if(user!=null&&!user.getEmail().isEmpty()) {
                 mailMessage.setTo(user.getEmail());
-                mailSender.send(mailMessage);
+               // mailSender.send(mailMessage);
             }
         }
     }

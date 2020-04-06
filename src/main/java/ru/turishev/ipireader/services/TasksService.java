@@ -102,10 +102,11 @@ public class TasksService {
 
 	public Set<User> getAllTaskSpectators(Task task) {
 		Set<User> spectators = new HashSet<>();
+		User u = task.getAuthor();
 		spectators.add(task.getAuthor()); //автор
-		spectators.add(task.getResponsible()); //ответственный
-		spectators.addAll(task.getSpectrators()); //наблюдатели из заявки
-		task.getSpectratorsGroup().forEach(group->spectators.addAll(group.getUsers())); //группы наблюдателей из заявки
+		if(task.getResponsible()!=null) spectators.add(task.getResponsible()); //ответственный
+		if(task.getSpectrators()!=null) spectators.addAll(task.getSpectrators()); //наблюдатели из заявки
+		if(task.getSpectratorsGroup()!=null) task.getSpectratorsGroup().forEach(group->spectators.addAll(group.getUsers())); //группы наблюдателей из заявки
 		spectators.addAll(task.getResponsibleGroup().getUsers()); //ответственная группа
 		spectators.addAll(task.getDivisionsTopic().getTopicAccessGrant().stream().map(
 				x->{
@@ -187,7 +188,6 @@ public class TasksService {
 				.markedExpired(false)
 				.priority(priority)
 				.status(status)
-			//	.attachments(files.stream().map((x)->Attachment.builder().filename(x.getOriginalFilename()).author(user).dateAdded(time).build()).collect(Collectors.toList()))
 				.responsibleGroup(topic.getResponsibleGroup())
 		.build();
 		task=tasksRepository.save(task);
@@ -204,7 +204,9 @@ public class TasksService {
 				}
 			}
 		}
+		mailSender.send(getAllTaskSpectators(task),"Тест","Заявка изменена");
 		return task.getId();
+
 		/*Добавить тут оповещение по email*/
 	}
 }

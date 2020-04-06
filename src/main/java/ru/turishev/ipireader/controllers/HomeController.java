@@ -6,12 +6,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.turishev.ipireader.dto.TasksDto;
+import ru.turishev.ipireader.model.User;
 import ru.turishev.ipireader.security.UserDetailsImpl;
 import ru.turishev.ipireader.services.TasksService;
+import ru.turishev.ipireader.services.UserService;
 
 
 @Controller
@@ -19,6 +22,9 @@ public class HomeController {
 
     @Autowired
     private TasksService tasksService;
+
+    @Autowired
+    private UserService userService;
     
     @GetMapping("/createdbymy")
     public String getCreatedByMyTasks(@AuthenticationPrincipal UserDetailsImpl user, Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
@@ -65,10 +71,11 @@ public class HomeController {
     }
     
     @GetMapping("/")
-    public String getHomePage(@AuthenticationPrincipal UserDetailsImpl user, Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<TasksDto> tasks = tasksService.getActiveTasksByUser(user.getUser(),pageable);
+    public String getHomePage(@AuthenticationPrincipal UserDetails user, Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        User currentUser = userService.getUserByLogin(user.getUsername());
+        Page<TasksDto> tasks = tasksService.getActiveTasksByUser(currentUser,pageable);
         if(tasks.getTotalPages()!=0) {
-        	model.addAttribute("page",tasks);
+            model.addAttribute("page",tasks);
         }
         model.addAttribute("url","/");
         model.addAttribute("dlm","?");

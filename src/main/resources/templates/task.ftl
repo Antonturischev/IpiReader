@@ -31,10 +31,11 @@
         <span class="delimiter"></span>
         <#if task.getComments()?has_content>
 			<#list task.getComments() as comment>
+				<#if comment.isComment() >
 				<blockquote class="blockquote">
 					<p class="mb-0">${comment.getText()}</p>
 					<footer class="blockquote-footer">${comment.getAuthor()} <cite title="Source Title">${comment.getDateAdded()}</cite></footer>
-				</blockquote>
+				</blockquote></#if>
 	    	</#list>    	
     	</#if>
     	<div>
