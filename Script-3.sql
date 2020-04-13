@@ -33,3 +33,12 @@ INSERT INTO tasks_task (subject,topic_id,project_id,parent_task_id,created_by_id
 ;
 select * from tasks_task tt 
 update tasks_task set responsible_id = 3 where responsible_id is null 
+
+
+CREATE TABLE IF NOT EXISTS persistent_logins (
+  username  VARCHAR(64) NOT NULL,
+  series    VARCHAR(64) NOT NULL,
+  token     VARCHAR(64) NOT NULL,
+  last_used TIMESTAMP   NOT NULL,
+  PRIMARY KEY (series)
+);
